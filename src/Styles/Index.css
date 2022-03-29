@@ -1,0 +1,153 @@
+
+*{
+	box-sizing: border-box; /*盒模型不同，所以宽度100%会超出边界 盒模型的区别主要在border和padding是否会超出边界*/
+	-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;	
+}
+input{
+	height:  100%;
+	width: 100%;
+	border: none;
+	
+}
+.flexbox{
+	margin: 20px auto;
+	width: 45vw;
+	height: 70vw;
+	background-color: whitesmoke;
+}
+.indextoolbar{
+	margin: 10px auto; /*得有宽度才能*/
+	width: 45vw;
+	display: flex;  /*BFC防止浮动高度坍塌 bfc计算浮动元素的高度 且不同bfc防止margin折叠 为flex布局内的元素设置display没用的 都表现为内联块元素*/
+	flex-direction: row-reverse;
+}
+.basedata{
+	width: 100%;
+	height: 18%;
+	border: .1px solid black;
+	display: flex;
+	text-align: center;
+}
+.basedatafloat1{
+	width: 30%;
+	border-right: .1px solid black;
+}
+.basedatafloat1 div{
+	width: 100%;
+	height: 20%;
+	border-top:.1px solid black;
+	
+}
+.basedatamiddle{
+	width: 40%;
+	border-right: .1px solid black;
+}
+.basedatamiddle > div{
+	display: flex;
+	width: 100%;
+	height: 20%;
+	border-top: .1px solid black;
+	
+}
+.basedataimage {
+	width: 30%;
+	height: 100%;
+	
+}
+ .middlediv1{
+	height: 100%;
+	width: 40%;
+	border-right: .1px solid black;
+}
+.middlediv2{
+	height: 100%;
+	width: 20%;
+	border-right: .1px solid black;
+}
+.middlediv3{
+	height: 100%;
+	width: 40%;
+}
+.history1{
+	width: 100%;
+	height: 30%;
+	border: .1px solid black;	
+}
+.history2{
+	width: 100%;
+	height: 30%;
+	border: .1px solid black;	
+}
+.diagnosis{
+	width: 100%;
+	height: 22%;
+	border: .1px solid black;	
+}
+.historydiv1{
+	height: 18%;
+	width: 100%;
+	border-bottom: .1px solid black;
+	display: flex;
+	text-align: center;
+}
+
+.historydiv1 > div:nth-child(1){
+	width: 25%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+.historydiv1 > div:nth-child(2){
+	width: 23%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+.historydiv1 > div:nth-child(3){
+	width: 16%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+.historydiv1 > div:nth-child(4){
+	width: 18%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+.historydiv1 > div:nth-child(5){
+	width: 18%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+
+.historydiv{
+	height: 18%;
+	width: 100%;
+	border-bottom: .1px solid black;
+	display: flex;
+	text-align: center;
+}
+
+.historydiv > div:nth-child(1){
+	width: 22%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+.historydiv > div:nth-child(2){
+	width: 26%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+.historydiv > div:nth-child(3){
+	width: 18%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+.historydiv > div:nth-child(4){
+	width: 20%;
+	height: 100%;
+	border-right: .1px solid black;
+}
+.historydiv > div:nth-child(5){
+	width: 14%;
+	height: 100%;
+	border-right: .1px solid black;
+}

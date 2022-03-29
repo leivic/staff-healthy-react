@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+@import '~antd/dist/antd.css'; /*全局引入样式*/
+
+.avatar-uploader > .ant-upload { /*从控制台查看组件的html元素本质，在全局样式直接修改*/
+  width: 100%;
+  height: 100%;
+}
+.avatar-uploader{
+  height: 100%; 
+}
+.ant-picker{
+  font-size: 2px;
+  padding: 0;
+  border: none;
+  height: 100%;
+  width: 100%;
+  -webkit-text-size-adjust: none; 
+}
+.ant-picker-range-separator{
+  padding: 0;
+}
+.ant-picker-input>input{
+  font-size: 4px;
+  -webkit-text-size-adjust: none; 
+}
+.editable-cell {
+  position: relative;
+}
+
+.editable-cell-value-wrap {
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.editable-row:hover .editable-cell-value-wrap {
+  padding: 4px 11px;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+[data-theme='dark'] .editable-row:hover .editable-cell-value-wrap {
+  border: 1px solid #434343;
+}
+
+.ant-table{
+  font-size: 12px;
+}
+.ant-table-cell{
+  padding: 2px!important;
+}
