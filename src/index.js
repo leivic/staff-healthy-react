@@ -2,11 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css'; //引入全局样式到入口文件
 import AppRouter from './AppRouter';
-import App from './components/menu'
 
 ReactDOM.render( //App ishidden属性判断文本框是否隐藏
   <div>
-    <App ishidden='none' name='小白' role='员工'/> 
     <AppRouter/>
   </div>
   ,
