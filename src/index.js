@@ -1,11 +1,20 @@
+//index.js 是react项目的入口文件 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css'; //引入全局样式到入口文件
 import AppRouter from './AppRouter';
+import { Layout } from 'antd'; 
+const { Header, Footer, Sider, Content } = Layout; //ant-design组件
 
-ReactDOM.render( //App ishidden属性判断文本框是否隐藏
+ReactDOM.render( //App ishidden属性判断文本框是否隐藏 
   <div>
-    <AppRouter/>
+    <Layout>
+      <Header></Header>
+      <Content>
+        <AppRouter/>
+      </Content>
+      <Footer></Footer>
+    </Layout>
   </div>
   ,
   document.getElementById('root')
