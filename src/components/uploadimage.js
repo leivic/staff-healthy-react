@@ -8,14 +8,14 @@ function getBase64(img, callback) {
   reader.readAsDataURL(img);
 }
 
-function beforeUpload(file) {
+function beforeUpload(file) { //beforeupload是antd的upload组件中封装的一个函数钩子 此处是限制传入的文件类型和文件大小
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
   if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
+    message.error('您只能上传 JPG/PNG 格式的文件!');
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
+    message.error('图片大小必须小于 2MB!');
   }
   return isJpgOrPng && isLt2M;
 }
@@ -29,7 +29,7 @@ class Avatar extends React.Component {
   }
   
 
-  handleChange = info => {
+  handleChange = info => { //
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
       return;
@@ -44,6 +44,12 @@ class Avatar extends React.Component {
       );
     }
   };
+  
+  onImgFilesChange = file => { 
+      let formData = new FormData();
+      formData.append('file', file.file);
+      this.props.changeimage(formData) //通过props访问父组件中的方法
+ }
 
   render() {
     const { loading, imageUrl } = this.state;
@@ -68,8 +74,9 @@ class Avatar extends React.Component {
 	      ); 
     }
     return (
+      /*  upload组件是antd封装的受控组件 需要onchange()才能上传 同时已封装数据输送到后端的功能 如果使用action属性 会传输上传的数据到action描述的后端接口
       <Upload
-	name="avatar"
+	      name="avatar"
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
@@ -79,6 +86,17 @@ class Avatar extends React.Component {
       >
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
+      */
+     <Upload
+      name="avatar"
+      listType="picture-card"
+      className="avatar-uploader"
+      showUploadList={false}
+      beforeUpload={beforeUpload}
+      customRequest={this.onImgFilesChange} 
+     >{/*upload组件默认的上传行为是使用action和onchange customRequest也是antd预定义的函数回调 用来覆盖默认的上传行为*/}
+      {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+     </Upload>
     );
   }
 }

@@ -21,7 +21,8 @@ function Index(props){
             educational:'本科',
             shihao:'打篮球',
             canjiagongzuoshijian:'2021-10-12',
-            idcard:'532131199010230561' 
+            idcard:'532131199010230561',
+            imageformdata:null
         }
     )
     const [isInputabled,setisInputadbled]=useState(props.input) //isinputeabled字段控制作为组件属性控制是否可编辑
@@ -43,14 +44,25 @@ function Index(props){
             userid:'01',
             name:'小白',
             jibingmingchen:'低温症',
-            kaishishijain:'2021-05',
+            kaishishijian:'2021-05',
             jieshushijian:'2021-09',
             hospitary:'重庆第三军医院',
-            治疗结果:'健康',
-            备注:'无'
+            zhiliaojieguo:'健康',
+            beizhu:'无'
         }
     ]) //初始化用来循环history2的数组
-    const [history3arry,sethistory3arry]=useState([1,1,1])
+    const [history3arry,sethistory3arry]=useState([
+        {
+            userid:'01',
+            name:'小白',
+            zhiyebingmingchen:'低温症',
+            kaishishijian:'2021-05',
+            jieshushijian:'2021-07',
+            hospitary:'重庆第三军医院',
+            zhenduanjibie:'A',
+            beizhu:'无' 
+        }
+    ])
    /*方法*/ 
     function changeuserobj(e){  //基本数据视图绑定数据的方法
         let data=Object.assign({},userobj) //深拷贝 直接let data=userboj 不可行 因为react不能根据state的值更新state 也不能直接state.name='xxx'更新state值 如果let data=userobj data和userobj其实指向堆中同一个对象 data.name='xxx' 相当于在做username.obj=‘xxx’的操作了 所以无法更改
@@ -99,6 +111,77 @@ function Index(props){
      /*function testchangename(e){  这样是可以的
         settestusername(e.tartget.value)
     }*/
+
+    function his2datepickerchange(index,date,datestring){ 
+        let data=Object.assign([],history2arry)
+        data[index].kaishishijian=datestring[0]
+        data[index].jieshushijian=datestring[1]
+        sethistory2arry(data)
+    }
+
+    
+    function his2change(index,e){
+        let data=Object.assign([],history2arry) 
+        data[index][e.target.name]=e.target.value
+        sethistory2arry(data)
+    }
+
+    function his2enterdown(index,e){ 
+        console.log(e)
+        let data=Object.assign([],history2arry)
+        if(e.keyCode === 13 && data.length-1 === index){
+            data.push({ 
+                userid:data[0].userid,
+                name:data[0].username,
+                jibingmingchen:'',
+                kaishishijian:moment().format('YYYY-MM'),
+                jieshushijian:moment().format('YYYY-MM'),
+                hospitary:'',
+                zhiliaojieguo:'',
+                beizhu:''
+            })
+        }
+        sethistory2arry(data)  
+    }
+
+    function his3datepickerchange(index,date,datestring){ 
+        let data=Object.assign([],history3arry)
+        data[index].kaishishijian=datestring[0]
+        data[index].jieshushijian=datestring[1]
+        sethistory3arry(data)
+    }
+
+    
+    function his3change(index,e){
+        let data=Object.assign([],history3arry) 
+        data[index][e.target.name]=e.target.value
+        sethistory3arry(data)
+    }
+
+    function his3enterdown(index,e){ 
+        console.log(e)
+        let data=Object.assign([],history3arry)
+        if(e.keyCode === 13 && data.length-1 === index){
+            data.push({ 
+                userid:'01',
+                name:'小白',
+                zhiyebingmingchen:'',
+                kaishishijian:moment().format('YYYY-MM'),
+                jieshushijian:moment().format('YYYY-MM'),
+                hospitary:'',
+                zhenduanjibie:'',
+                beizhu:'' 
+            })
+        }
+        sethistory3arry(data)  
+    }
+
+    function changeimageadta(formdata){ //由子组件触发的 父组件中state改变的方法 本方法是为了改变图片数据  子组件访问父组件的形式
+        let data=Object.assign({},userobj)
+        data.formdata=formdata
+        setuserobj(data) 
+    }
+
 
     useEffect(()=>{ //当组件第一次加载 和重渲染dom时（理论上更新state，传入组件的prop改变 均会触发重渲染dom），触发useEffect副作用
         console.log(userobj)
@@ -156,7 +239,7 @@ function Index(props){
                     </div>
                 </div>
                 <div className='basedataimage'>
-                    <Avadar isdiabled={isdiabled} /> 
+                    <Avadar isdiabled={isdiabled} changeimage={changeimageadta}/> {/*changeimage 可在子组件中通过props取出*/}
                 </div>
             </div>
             <div className='history1'>
@@ -196,11 +279,11 @@ function Index(props){
                         history2arry.map((item,index)=>{
                             return(
                                 <div className="historydiv">
-                                <div><input type='text' disabled={isInputabled}></input></div>
-                                <div><RangePicker bordered={false}  picker="month" disabled={isInputabled}/></div>
-                                <div><input type='text' disabled={isInputabled}></input></div>
-                                <div><input type='text' disabled={isInputabled}></input></div>
-                                <div><input type='text' disabled={isInputabled}></input></div> 
+                                <div><Input type='text' disabled={isInputabled} name="jibingmingchen" value={item.jibingmingchen} onChange={(e)=>his2change(index,e)} onKeyUp={(e)=>his2enterdown(index,e)}></Input></div>
+                                <div><RangePicker bordered={false}  picker="month" disabled={isInputabled} value={[moment(item.kaishishijian, dateFormat), moment(item.jieshushijian, dateFormat)]} onChange={(date,datestring)=>his2datepickerchange(index,date,datestring)}/></div>
+                                <div><Input type='text' disabled={isInputabled} name="hospitary" value={item.hospitary} onChange={(e)=>his2change(index,e)} onKeyUp={(e)=>his2enterdown(index,e)}></Input></div>
+                                <div><Input type='text' disabled={isInputabled} name="zhiliaojieguo" value={item.zhiliaojieguo} onChange={(e)=>his2change(index,e)} onKeyUp={(e)=>his2enterdown(index,e)}></Input></div>
+                                <div><Input type='text' disabled={isInputabled} name="beizhu" value={item.beizhu} onChange={(e)=>his2change(index,e)} onKeyUp={(e)=>his2enterdown(index,e)}></Input></div> 
                             </div>
                             )
                         })
@@ -219,11 +302,11 @@ function Index(props){
                         history3arry.map((item,index)=>{
                             return(
                                 <div className="historydiv" >
-                                <div><input type='text' disabled={isInputabled}></input></div>
-                                <div><RangePicker bordered={false}  picker="month" disabled={isInputabled}/></div>
-                                <div><input type='text' disabled={isInputabled}></input></div>
-                                <div><input type='text' disabled={isInputabled}></input></div>
-                                <div><input type='text' disabled={isInputabled}></input></div> 
+                                <div><Input type='text' disabled={isInputabled} name="zhiyebingmingchen" value={item.zhiyebingmingchen} onChange={(e)=>his3change(index,e)} onKeyUp={(e)=>his3enterdown(index,e)}></Input></div>
+                                <div><RangePicker bordered={false}  picker="month" disabled={isInputabled} value={[moment(item.kaishishijian, dateFormat), moment(item.jieshushijian, dateFormat)]} onChange={(date,datestring)=>his3datepickerchange(index,date,datestring)}/></div>
+                                <div><Input type='text' disabled={isInputabled} name="hospitary" value={item.hospitary} onChange={(e)=>his3change(index,e)} onKeyUp={(e)=>his3enterdown(index,e)}></Input></div>
+                                <div><Input type='text' disabled={isInputabled} name="zhenduanjibie" value={item.zhenduanjibie} onChange={(e)=>his3change(index,e)} onKeyUp={(e)=>his3enterdown(index,e)}></Input></div>
+                                <div><Input type='text' disabled={isInputabled} name="beizhu" value={item.beizhu} onChange={(e)=>his3change(index,e)} onKeyUp={(e)=>his3enterdown(index,e)}></Input></div> 
                                 </div> 
                             )
                         })   
