@@ -94,7 +94,7 @@ class Avatar extends React.Component {
       showUploadList={false}
       beforeUpload={beforeUpload}
       customRequest={this.onImgFilesChange} 
-     >{/*upload组件默认的上传行为是使用action和onchange customRequest也是antd预定义的函数回调 用来覆盖默认的上传行为*/}
+     >{/*upload组件默认的上传行为是使用actionz和onchange customRequest也是antd预定义的函数回调 用来覆盖默认的上传行为*/}
       {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
      </Upload>
     );
