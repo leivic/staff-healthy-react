@@ -48,7 +48,7 @@ class Avatar extends React.Component {
   onImgFilesChange = file => { 
       let formData = new FormData();
       formData.append('file', file.file);
-      this.props.changeimage(formData) //通过props访问父组件中的方法
+      this.props.changeimage(formData) //通过props访问父组件中的方法  将formData数据入父组件的state中
  }
 
   render() {

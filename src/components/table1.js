@@ -5,15 +5,42 @@ import { Button,Input } from 'antd';
 import Avadar from './uploadimage'
 import { DatePicker, Space } from 'antd';
 import moment from 'moment'; //日期格式化组件
-const dateFormat = 'YYYY-MM';
+import { getworkerbasedata } from '../api/api'
 
+const dateFormat = 'YYYY-MM';
 const { RangePicker } = DatePicker;
-function Index(props){
+
+
+/*getworkerbasedata(3).then(res=>{
+    console.log('封装后的api',res)
+})
+封装后的axios的使用
+*/
+/*axios.get('http://127.0.0.1:7001/getworkerbasedata',{
+    params:{
+        userid:3
+    }
+}).then(
+  res => {
+    console.log("get res:",res);
+
+ },error => {
+    console.log("get request failed:",error);
+   
+ }
+);axios 的直接使用 这样可以直接发起请求 但是请求多了以后太过繁琐*/
+
+
+
+
+
+function Table1(props){
 
     /*数据*/
     //const [testusername,settestusername]=useState("小白") 测试使用数据
     const [userobj,setuserobj]=useState(
         {
+            id:'01',
             name:'小白',
             sex:'男',
             area:'广西柳州',
@@ -322,4 +349,6 @@ function Index(props){
      
 }
 
-export default Index;
+
+export default Table1;
+
