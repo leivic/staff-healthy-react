@@ -6,6 +6,7 @@ import axios from "axios";
 axios.defaults.timeout = 100000;
 axios.defaults.baseURL = "http://127.0.0.1:7001";
 
+console.log('token设置了吗？',sessionStorage.getItem('jwttoken'))
 /**
  * http request 拦截器
  */
@@ -14,6 +15,7 @@ axios.interceptors.request.use(
     config.data = JSON.stringify(config.data);
     config.headers = {
       "Content-Type": "application/json",
+     "Authorization": 'Bearer '+sessionStorage.getItem('jwttoken')   // token前面有bear的信息前缀 会用到封装后的axios都是在登录之后的请求中 当时session已经存储了token 去掉这个地方 后面的请求都是401 登录中是个单独引入的axios  并没有引入http模块 也就没有执行这一段拦截器的代码 
     };
     return config;
   },
@@ -21,6 +23,8 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+
 
 /**
  * http response 拦截器

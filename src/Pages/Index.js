@@ -4,9 +4,13 @@ import { useState,useEffect,useRef } from 'react';
 import { Button } from 'antd';
 import Avadar from '../components/uploadimage'
 import { DatePicker, Space } from 'antd';
+import { connect } from 'react-redux'
+import { addToCart }  from '../store/actions/cart-actions'
+
+
 
 const { RangePicker } = DatePicker;
-function Index(){
+function Index(props){
 
     const obj1={
         name:'小白',
@@ -38,6 +42,7 @@ function Index(){
     }
 
     useEffect(()=>{ //当重渲染dom时，触发useEffect副作用
+        console.log('testreduxdata',props.testreduxdata)
         console.log(nameInput.current.value)
     })
 
@@ -221,4 +226,14 @@ function Index(){
      
 }
 
-export default Index;
+export default connect(   
+    //数据
+    state=>({testreduxdata:state}),
+    //方法
+    {
+        addToCart
+    }
+)(Index)
+
+
+

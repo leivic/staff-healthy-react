@@ -11,8 +11,8 @@ function AppRouter() {
   return (
     <Router>
         <Routes>{/*Router也是个组件 内部可以路由切换组件*/}
-          <Route path="/"  element={<Index/>} />
-          <Route path="/login"  element={<Login/>} />
+          <Route path="/"  element={<Login/>} />
+          <Route path="/Index"  element={<Index/>} />
           <Route path="/stafffirstlogin/"  element={<Stafffirstlogin/>} />
           <Route path="/list/" element={<List/>} />
           <Route path="/tablebox2/" element={<Tablebox2/>} />

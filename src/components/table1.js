@@ -11,11 +11,12 @@ const dateFormat = 'YYYY-MM';
 const { RangePicker } = DatePicker;
 
 
-/*getworkerbasedata(3).then(res=>{
+getworkerbasedata(1).then(res=>{ //在封装的http模块中设置了登录时从后端获取到的token  所以该接口访问成功
     console.log('封装后的api',res)
 })
-封装后的axios的使用
-*/
+
+
+
 /*axios.get('http://127.0.0.1:7001/getworkerbasedata',{
     params:{
         userid:3
@@ -29,6 +30,7 @@ const { RangePicker } = DatePicker;
    
  }
 );axios 的直接使用 这样可以直接发起请求 但是请求多了以后太过繁琐*/
+const userid = 3 //这个userid应该是存在redux或者
 
 
 
