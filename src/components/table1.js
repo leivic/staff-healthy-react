@@ -37,7 +37,8 @@ const userid = 3 //这个userid应该是存在redux或者
 
 
 function Table1(props){
-
+    //用户基本信息和职业病史既往病史职业病诊断表格是否可编辑等数据数据状态变量的创建和数据初始化
+    //==============================================================================================
     /*数据*/
     //const [testusername,settestusername]=useState("小白") 测试使用数据
     const [userobj,setuserobj]=useState(
@@ -92,29 +93,39 @@ function Table1(props){
             beizhu:'无' 
         }
     ])
-   /*方法*/ 
+    //============================================================================================================================
+   
+    /*方法*/ 
+    //更改用户基本信息view时触发数据状态state更新
+    //=======================================================================================
     function changeuserobj(e){  //基本数据视图绑定数据的方法
         let data=Object.assign({},userobj) //深拷贝 直接let data=userboj 不可行 因为react不能根据state的值更新state 也不能直接state.name='xxx'更新state值 如果let data=userobj data和userobj其实指向堆中同一个对象 data.name='xxx' 相当于在做username.obj=‘xxx’的操作了 所以无法更改
         data[e.target.name]=e.target.value //data.name =e.target.value 当多个input时  只能实现一个input的更改 data[e.target.name]却可以动态选择 实现多个input使用一个方法
         setuserobj(data)
     }
-
-
-
+    //=================================================================================================================================
+    
+    //更改职业病史起止时间view视图时触发数据状态state更新
+    //=============================================================================================================
     function his1datepickerchange(index,date,datestring){ //更改职业病那几行日期的视图绑定数据的方法 date是moment格式的
         let data=Object.assign([],history1arry)
         data[index].kaishishijian=datestring[0]
         data[index].jieshushijian=datestring[1]
         sethistory1arry(data)
     }
-
+    //=============================================================================================================
     
+    //职业病史视图view时触发数据状态state更新
+    //================================================================================================================
     function his1change(index,e){//更改职业病史那几行表格的工作单位单元格触发的方法 更新state historry1div的值
         let data=Object.assign([],history1arry) //注意这里使用的是[] history1arry是数组 更新后也得更新为数组格式 不然下方.map()报错
         data[index][e.target.name]=e.target.value
         sethistory1arry(data)
     }
-
+    //====================================================================================================================
+    
+    //职业病史表格增加一行事件
+    //==================================================================================================================
     function his1enterdown(index,e){ //enter敲击增加一行事件 
         console.log(e)
         let data=Object.assign([],history1arry)
@@ -132,6 +143,7 @@ function Table1(props){
         }
         sethistory1arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
     }
+    //=====================================================================================================================
     /*function changename(e){  这样也是可以的 但是userobj整个对象被更新
         setuserobj({name:e.target.value})
     }*/
@@ -141,20 +153,27 @@ function Table1(props){
         settestusername(e.tartget.value)
     }*/
 
+    //更改既往病史起止时间view视图时触发数据状态state更新
+    //========================================================================================================
     function his2datepickerchange(index,date,datestring){ 
         let data=Object.assign([],history2arry)
         data[index].kaishishijian=datestring[0]
         data[index].jieshushijian=datestring[1]
         sethistory2arry(data)
     }
-
+    //=========================================================================================================
     
+    //既往病史视图view更改时触发数据状态state更新
+    //============================================================================================================
     function his2change(index,e){
         let data=Object.assign([],history2arry) 
         data[index][e.target.name]=e.target.value
         sethistory2arry(data)
     }
-
+    //==============================================================================================================
+    
+    //既往病史表格增加一行事件 
+    //==============================================================================
     function his2enterdown(index,e){ 
         console.log(e)
         let data=Object.assign([],history2arry)
@@ -172,21 +191,27 @@ function Table1(props){
         }
         sethistory2arry(data)  
     }
-
+    //更改职业病诊断起止时间view视图时触发数据状态state更新
+    //============================================================================================
     function his3datepickerchange(index,date,datestring){ 
         let data=Object.assign([],history3arry)
         data[index].kaishishijian=datestring[0]
         data[index].jieshushijian=datestring[1]
         sethistory3arry(data)
     }
-
+    //=============================================================================================
     
+    //职业病诊断视图view更改时触发数据状态state更新
+    //===============================================================================================
     function his3change(index,e){
         let data=Object.assign([],history3arry) 
         data[index][e.target.name]=e.target.value
         sethistory3arry(data)
     }
-
+    //=============================================================================================
+    
+    //职业病诊断表格增加一行事件 
+    //==============================================================================================
     function his3enterdown(index,e){ 
         console.log(e)
         let data=Object.assign([],history3arry)
@@ -204,22 +229,29 @@ function Table1(props){
         }
         sethistory3arry(data)  
     }
+    //===============================================================================================
 
+    //本方法由子组件视图操作触发 更新state数据状态中的图片数据
+    //=====================================================================================================
     function changeimageadta(formdata){ //由子组件触发的 父组件中state改变的方法 本方法是为了改变图片数据  子组件访问父组件的形式
         let data=Object.assign({},userobj)
         data.formdata=formdata
         setuserobj(data) 
     }
+    //===================================================================================
 
-
+    //当组件第一次加载或重渲染dom时（理论上更新state，传入的prop改变等） 触发的回调方法
+    //================================================================================================
     useEffect(()=>{ //当组件第一次加载 和重渲染dom时（理论上更新state，传入组件的prop改变 均会触发重渲染dom），触发useEffect副作用
         console.log(userobj)
         console.log(history1arry)
     })
-
+    //=================================================================================================
 
 
     return (
+       //用户基本信息视图
+       //================================================================================================================================================================
         <div>
         <h2 style={{textAlign:'center'}}>劳动者个人信息卡</h2>
         <div className='flexbox'>
@@ -271,6 +303,10 @@ function Table1(props){
                     <Avadar isdiabled={isdiabled} changeimage={changeimageadta}/> {/*changeimage 可在子组件中通过props取出*/}
                 </div>
             </div>
+            {/*=================================================================================================================================================*/}
+            
+            {/*职业病视图*/}
+            {/*=================================================================================================================================================*/}
             <div className='history1'>
                 <div style={{height:'10%',borderBottom:'.1px solid black'}}>职业病史及健康危害史 </div>
                 <div className="historydiv1">
@@ -295,6 +331,10 @@ function Table1(props){
                     })
                 } 
             </div>
+            {/*=================================================================================================================================*/}
+            
+            {/*既往病史视图*/}
+            {/*=================================================================================================================================*/}
             <div className='history2'>
                 <div style={{height:'10%',borderBottom:'.1px solid black'}}>既往病史 </div>
                     <div className="historydiv">
@@ -318,8 +358,12 @@ function Table1(props){
                         })
                     }
             </div>
+            {/*==================================================================================================================================*/}
+            
+            {/*职业病诊断视图*/}
+            {/*=========================================================================================================================================*/}
             <div className='diagnosis'>
-            <div style={{height:'12%',borderBottom:'.1px solid black'}}>职业病诊断 </div>
+                <div style={{height:'12%',borderBottom:'.1px solid black'}}>职业病诊断 </div>
                     <div className="historydiv" >
                         <div>职业病名称</div>
                         <div>诊断时间</div>
@@ -342,6 +386,8 @@ function Table1(props){
                     }
                     
             </div>
+            {/*===========================================================================================================================================================================*/}
+        
         </div>
         <div className='indextoolbar'>
             {/*div包裹一个float元素，div高度坍塌，给div设置为inline-block或display:flex 即可触发bfc，bfc高度计算float*/}

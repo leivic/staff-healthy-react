@@ -9,8 +9,8 @@ import {Provider} from "react-redux";  //react-redux库和redux库是两种东�
 import { Layout } from 'antd'; 
 const { Header, Footer, Sider, Content } = Layout; //ant-design组件
 
-
-
+//redux store的3个方法测试redux功能
+//==================================================================================================
 console.log("initial state: ", store.getState()); //先看一下目前store里面的数据
 
  store.subscribe(() =>             //监听每次store中任意状态的变化，执行方法中定义的函数回调
@@ -20,11 +20,11 @@ console.log("initial state: ", store.getState()); //先看一下目前store里�
 store.dispatch(addToCart('Coffee 500gm', 1, 250)); //分发store中某个更新数据的方法 来更新redux中的数据
 store.dispatch(addToCart('Flour 1kg', 2, 110));
 store.dispatch(addToCart('Juice 2L', 1, 250));
+//===================================================================================================
 
 
-
-
-
+//react render()方法渲染的顶层react元素  
+//====================================================================================================
 ReactDOM.render( //App ishidden属性判断文本框是否隐藏 
  <Provider store={store}> {/*使用react-redux必要的一步  store中的数据都被存在顶层组件中了*/}
   <div>
@@ -40,7 +40,7 @@ ReactDOM.render( //App ishidden属性判断文本框是否隐藏
   ,
   document.getElementById('root')
 );
-
+//====================================================================================================
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

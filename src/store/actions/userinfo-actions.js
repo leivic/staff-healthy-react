@@ -1,5 +1,7 @@
 // src/actions/cart-actions.js
 
+//描述 user-reducer的 action，action中描述store数据的来源 和 reducer中将被操作的动作类型
+//=======================================================================================================================================
 export const UPDATE_TO_USERINFO = 'UPDATE_TO_USERINFO';
 
 //
@@ -9,3 +11,4 @@ export function updateToUserinfo(name,userid,roleid,token) { //定义一个actio
     payload: { name,userid,roleid,token } // 传递动作的数据
   }
 }
+//=======================================================================================================================================

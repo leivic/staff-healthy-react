@@ -4,7 +4,8 @@ import axios from "axios";
 import { connect } from 'react-redux'  //connect是来自react-redux库的连接逻辑组件和ui组件的容器
 import { updateToUserinfo }  from '../store/actions/userinfo-actions' //veiw触发action以更新store中的数据
 
-
+//访问后端登录接口的api 
+//===================================================================================================
 async function getuserinfo(username,password){   //为什么要单独写一个axios呢？ 因为封装axios的api已经被我
     return await axios.post('http://127.0.0.1:7001/login',{ //不加return 本函数内返回undefined 加了return才是返回一个promise 
 		username:username,
@@ -15,12 +16,12 @@ async function getuserinfo(username,password){   //为什么要单独写一个ax
 	})
 	
 }
-
+//================================================================================================
 
 function Login(props){ //通过react-redux的库封装 将下方connect中的action和state添加到组件的props上
 		
-	      	
-
+//antd <Form> 组件封装的onFinish回调 登录成功时，存储token 存储redux数据 页面跳转等操作		      
+//=============================================================================================================================
 	      const onFinish = (values) => { //antd组件封装的回调方法 values是 <Form.item></Form.item>元素下面的所有对象
 		getuserinfo(values.username,values.password).then( 
 			res=>{ //首先判断返回的数据 是否查询到了对应数据
@@ -28,7 +29,7 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 				if(res.data.userinfo.length==0){//假如没有查询到对应数据
 					alert("登录失败，请检查账号密码")
 				}else{//查询到了对应数据
-					props.updateToUserinfo(res.data.userinfo[0].name,res.data.userinfo[0].id,res.data.userinfo[0].roleid,res.data.token) //redux action  将查询到的信息添加到redux上
+					props.updateToUserinfo(res.data.userinfo[0].name,res.data.userinfo[0].id,res.data.userinfo[0].roleid,res.data.token) //调用redux action  将查询到的信息添加到redux上
 					sessionStorage.setItem('jwttoken',res.data.token)//将token存储在session中
 					return res
 				}
@@ -38,14 +39,18 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 			axios.get('http://127.0.0.1:7001/testtoken') //测试用的接口 直接这样访问 提示401 需要token认证
 			switch(res.data.userinfo[0].roleid){//登录成功后 根据登录用户不同的权限跳转向不同的页面
 				case 1:
-				console.log('props',props.history)
-				window.location.href = "/stafffirstlogin"
+					if(res.data.userinfo[0].isfirstlogin==0){ //当员工第一次登录
+						console.log('props',props.history)
+						window.location.href = "/stafffirstlogin"
+					}else if(res.data.userinfo[0].isfirstlogin==1){//当员工不是第一次登录
+
+					}
 				break;
 			}
 		})
 
 	      };
-	    
+//========================================================================================================================	    
 	      const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo);
 	      };
@@ -120,6 +125,8 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 	      );
 }
 
+//react-redux 引入的connect方法 用于连接ui组件（本页面Login组件） 和逻辑组件 （库封装的顶层Provider组件）
+//===================================================================================================================
 export default connect(    //从react-redux引入的方法 用于连接逻辑组件和UI组件 有了这个甚至可以省下//export default Login  
 	//数据  这里的数据和方法会变成Login组件的props 
 	state=>({reduxdata:state}),
@@ -128,5 +135,5 @@ export default connect(    //从react-redux引入的方法 用于连接逻辑组
 		updateToUserinfo
 	}
     )(Login)
-
+//============================================================================================================
 //export default Login; 

@@ -1,3 +1,5 @@
+//通过redux库中的combineReducers整合多个reducer文件
+//============================================================================================
 //整合创建的所有不同reducer的文件
 
 // src/reducers/index.js
@@ -16,3 +18,4 @@ const allReducers = {         //整个store中state的数据格式即如下
 const rootReducer = combineReducers(allReducers);
 
 export default rootReducer;
+//===============================================================================================
