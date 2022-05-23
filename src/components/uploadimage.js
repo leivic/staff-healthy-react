@@ -1,6 +1,7 @@
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import React from 'react';
+import ImgCrop from 'antd-img-crop';
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -20,7 +21,7 @@ function beforeUpload(file) { //beforeupload是antd的upload组件中封装的�
   return isJpgOrPng && isLt2M;
 }
 
-class Avatar extends React.Component {
+class Avatartest extends React.Component {
   constructor(props){ //传入组件的props
 	  super(props)
 	  this.state={
@@ -74,19 +75,21 @@ class Avatar extends React.Component {
 	      ); 
     }
     return (
-      /*  upload组件是antd封装的受控组件 需要onchange()才能上传 同时已封装数据输送到后端的功能 如果使用action属性 会传输上传的数据到action描述的后端接口
-      <Upload
-	      name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        beforeUpload={beforeUpload}
-        onChange={this.handleChange}
-      >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-      </Upload>
-      */
+      //  upload组件是antd封装的受控组件 需要onchange()才能上传 同时已封装数据输送到后端的功能 如果使用action属性 会传输上传的数据到action描述的后端接口
+      <ImgCrop rotate>
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          beforeUpload={beforeUpload}
+          onChange={this.handleChange}
+        >
+          {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        </Upload>
+      </ImgCrop>
+      /*
      <Upload
       name="avatar"
       listType="picture-card"
@@ -94,11 +97,12 @@ class Avatar extends React.Component {
       showUploadList={false}
       beforeUpload={beforeUpload}
       customRequest={this.onImgFilesChange} 
-     >{/*upload组件默认的上传行为是使用actionz和onchange customRequest也是antd预定义的函数回调 用来覆盖默认的上传行为*/}
+     >{/*upload组件默认的上传行为是使用actionz和onchange customRequest也是antd预定义的函数回调 用来覆盖默认的上传行为
       {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
      </Upload>
+    */
     );
   }
 }
 
-export default Avatar
+export default Avatartest 

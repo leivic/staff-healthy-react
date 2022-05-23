@@ -3,6 +3,9 @@ import { Form, Input, Button, Checkbox } from 'antd'; //从antd导入的组件
 import axios from "axios";
 import { connect } from 'react-redux'  //connect是来自react-redux库的连接逻辑组件和ui组件的容器
 import { updateToUserinfo }  from '../store/actions/userinfo-actions' //veiw触发action以更新store中的数据
+import { useNavigate } from 'react-router-dom'
+
+
 
 //访问后端登录接口的api 
 //===================================================================================================
@@ -19,7 +22,7 @@ async function getuserinfo(username,password){   //为什么要单独写一个ax
 //================================================================================================
 
 function Login(props){ //通过react-redux的库封装 将下方connect中的action和state添加到组件的props上
-		
+	      const navigate = useNavigate() //react-v6使用的
 //antd <Form> 组件封装的onFinish回调 登录成功时，存储token 存储redux数据 页面跳转等操作		      
 //=============================================================================================================================
 	      const onFinish = (values) => { //antd组件封装的回调方法 values是 <Form.item></Form.item>元素下面的所有对象
@@ -41,7 +44,9 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 				case 1:
 					if(res.data.userinfo[0].isfirstlogin==0){ //当员工第一次登录
 						console.log('props',props.history)
-						window.location.href = "/stafffirstlogin"
+						// window.location.href = "/stafffirstlogin" 也可跳转 但是跳转后是重载页面程序 redux里的数据丢失成初始化的结果 session里的token没丢失 是因为session是浏览器提供的api  所以token仍然没丢失 
+						navigate('/stafffirstlogin') //路由更新 程序并没有重载 redux里的数据能不会丢失
+						
 					}else if(res.data.userinfo[0].isfirstlogin==1){//当员工不是第一次登录
 
 					}

@@ -5,15 +5,17 @@ import { Button,Input } from 'antd';
 import Avadar from './uploadimage'
 import { DatePicker, Space } from 'antd';
 import moment from 'moment'; //日期格式化组件
-import { getworkerbasedata } from '../api/api'
+
+
+
 
 const dateFormat = 'YYYY-MM';
 const { RangePicker } = DatePicker;
 
 
-getworkerbasedata(1).then(res=>{ //在封装的http模块中设置了登录时从后端获取到的token  所以该接口访问成功
-    console.log('封装后的api',res)
-})
+
+
+
 
 
 
@@ -36,13 +38,14 @@ const userid = 3 //这个userid应该是存在redux或者
 
 
 
-function Table1(props){
+function Table1(props){ //父组件的state作为子组件的属性 父组件state更新 触发重渲染 子组件prop当然会更新 但是子组件的state可不会随之更新 useState()只是初始化的值
     //用户基本信息和职业病史既往病史职业病诊断表格是否可编辑等数据数据状态变量的创建和数据初始化
     //==============================================================================================
     /*数据*/
     //const [testusername,settestusername]=useState("小白") 测试使用数据
-    const [userobj,setuserobj]=useState(
-        {
+    const [userobj,setuserobj]=useState(  //这里仅是初始化的值 
+        props.userobj  //从上层组件流入本层组件的属性获取初始用户信息
+        /*{  数据格式
             id:'01',
             name:'小白',
             sex:'男',
@@ -53,7 +56,7 @@ function Table1(props){
             canjiagongzuoshijian:'2021-10-12',
             idcard:'532131199010230561',
             imageformdata:null
-        }
+        }*/
     )
     const [isInputabled,setisInputadbled]=useState(props.input) //isinputeabled字段控制作为组件属性控制是否可编辑
     const [isdiabled,setisdiabled]=useState(props.disabled)     //字段作为组件属性控制组件是否可选
@@ -243,9 +246,10 @@ function Table1(props){
     //当组件第一次加载或重渲染dom时（理论上更新state，传入的prop改变等） 触发的回调方法
     //================================================================================================
     useEffect(()=>{ //当组件第一次加载 和重渲染dom时（理论上更新state，传入组件的prop改变 均会触发重渲染dom），触发useEffect副作用
-        console.log(userobj)
-        console.log(history1arry)
-    })
+        console.log('table1-userobj',userobj)
+        console.log('table1-history1arry',history1arry)
+        setuserobj(props.userobj)
+    },[props]) //userEFFect 如果没有第二个参数 则如上注释 重渲染dom和组件第一次加载触发Effect 有第二个参数则第二个参数数组里的变量变化时就执行Effect() 第二个参数为[]则只有组件加载时部署
     //=================================================================================================
 
 
@@ -397,6 +401,7 @@ function Table1(props){
      
 }
 
+export default Table1
 
-export default Table1;
+
 
