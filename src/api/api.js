@@ -15,13 +15,27 @@ import http from './http';
       
       
     }
-   
+  
+  function updateworkerbasedatabyuserid(name,sex,area,marriage,educational,shihao,canjiagongzuoshijian,idcard,userid){
+    return http("post",'/updateworkerbasedatabyuserid',{
+      name:name,
+      sex:sex,
+      area:area,
+      marriage:marriage,
+      educational:educational,
+      shihao:shihao,
+      canjiagongzuoshijian:canjiagongzuoshijian,
+      idcard:idcard,
+      userid:userid
+    })
+  }
 
 
 
 
 
 export {
-	getworkerbasedata
+  getworkerbasedata,
+  updateworkerbasedatabyuserid 
 }
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import  '../Styles/Index.css';
-import { useState,useEffect,useRef } from 'react';
+import { useState,useEffect,useRef,forwardRef,useImperativeHandle } from 'react';
 import { Button,Input } from 'antd';
 import Avadar from './uploadimage'
 import { DatePicker, Space } from 'antd';
 import moment from 'moment'; //日期格式化组件
-
+import { updateworkerbasedatabyuserid } from '../api/api'
 
 
 
@@ -38,7 +38,7 @@ const userid = 3 //这个userid应该是存在redux或者
 
 
 
-function Table1(props){ //父组件的state作为子组件的属性 父组件state更新 触发重渲染 子组件prop当然会更新 但是子组件的state可不会随之更新 useState()只是初始化的值
+const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父组件state更新 触发重渲染 子组件prop当然会更新 但是子组件的state可不会随之更新 useState()只是初始化的值
     //用户基本信息和职业病史既往病史职业病诊断表格是否可编辑等数据数据状态变量的创建和数据初始化
     //==============================================================================================
     /*数据*/
@@ -55,7 +55,7 @@ function Table1(props){ //父组件的state作为子组件的属性 父组件sta
             shihao:'打篮球',
             canjiagongzuoshijian:'2021-10-12',
             idcard:'532131199010230561',
-            imageformdata:null
+            image:null
         }*/
     )
     const [isInputabled,setisInputadbled]=useState(props.input) //isinputeabled字段控制作为组件属性控制是否可编辑
@@ -242,6 +242,20 @@ function Table1(props){ //父组件的state作为子组件的属性 父组件sta
         setuserobj(data) 
     }
     //===================================================================================
+    
+   
+    //=========================================================================
+    useImperativeHandle(ref, () => ({ //forwardRef,useImperativeHandle两个库用于父子组件的ref节点传递
+        updateworkerbasedatabyuserid:(id)=>{ //按照userid更新数据 新增或者更新 id要从变量获取，因为id涉及到是当前用户还是后面管理员选择的用户
+            updateworkerbasedatabyuserid(userobj.name,userobj.sex,userobj.area,userobj.marriage,userobj.educational,userobj.shihao,userobj.canjiagongzuoshijian,userobj.idcard,id).then(
+                res=>{
+                    console.log('updateworkerbasedatabyuserid-res',res)
+                }
+            )
+        } 
+      }))
+    //================================================================================
+    
 
     //当组件第一次加载或重渲染dom时（理论上更新state，传入的prop改变等） 触发的回调方法
     //================================================================================================
@@ -401,7 +415,7 @@ function Table1(props){ //父组件的state作为子组件的属性 父组件sta
      
 }
 
-export default Table1
+export default forwardRef(Table1)//包裹forwardRef是为了父组件通过ref取到子组件的方法
 
 
 
