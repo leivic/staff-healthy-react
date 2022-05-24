@@ -34,6 +34,8 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 				}else{//查询到了对应数据
 					props.updateToUserinfo(res.data.userinfo[0].name,res.data.userinfo[0].id,res.data.userinfo[0].roleid,res.data.token) //调用redux action  将查询到的信息添加到redux上
 					sessionStorage.setItem('jwttoken',res.data.token)//将token存储在session中
+					sessionStorage.setItem('name',res.data.userinfo[0].name)
+					sessionStorage.setItem('userid',res.data.userinfo[0].id)	
 					return res
 				}
 			}

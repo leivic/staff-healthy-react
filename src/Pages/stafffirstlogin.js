@@ -50,7 +50,10 @@ function Stafffristlogin(props){
 			<button onClick={clicktijiao}>提交数据</button>			
 			<App ishidden='none' name='小白' role='员工'/> 
 				<p style={{width:'45vw',margin:'0 auto'}}>xxx,首次登录，请您填写以下信息</p>
-			<Table1 input={false} disabled={true} userobj={userobj} ref={table1dom}/>
+			<Table1 
+			input={false} disabled={true} userobj={userobj} ref={table1dom}
+			displaybutton='inline-block'
+			/>
 		</div>
 		)
 	

@@ -97,7 +97,8 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         }
     ])
     //============================================================================================================================
-   
+    const [displaybutton,setdisplaybutton]=useState(props.displaybutton)//这个state控制增减行的button能不能使用
+    //===============================================================================
     /*方法*/ 
     //更改用户基本信息view时触发数据状态state更新
     //=======================================================================================
@@ -127,7 +128,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     }
     //====================================================================================================================
     
-    //职业病史表格增加一行事件
+    //职业病史表格回车增加一行事件
     //==================================================================================================================
     function his1enterdown(index,e){ //enter敲击增加一行事件 
         console.log(e)
@@ -147,6 +148,38 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         sethistory1arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
     }
     //=====================================================================================================================
+    //职业病史表格新增按钮增加一行事件
+    //==================================================================================================================
+    function his1clickadd(){ //点击新增增加一行事件
+        let data=Object.assign([],history1arry)
+        if(data.length>=0){//如果是最后一行
+            data.push({ //数组里新增一行空数据 
+                userid:data[0].userid,
+                name:data[0].username,
+                kaishishijian: moment().format('YYYY-MM'),
+                jieshushijian: moment().format('YYYY-MM'),
+                gongzuodanwei:'',
+                gongzhong:'',
+                weihaiyinsu:'',
+                fanghucuoshi:'' 
+            })
+        }
+        sethistory1arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
+    }
+    //===================================================================================================================== 
+     //职业病史表格删除按钮删除一行事件
+    //==================================================================================================================
+    function his1clickdelete(){ //点击删除一行事件 
+        let data=Object.assign([],history1arry)
+        console.log('data-length',data.length)
+        if(data.length>=2){//如果大于等于一行
+            data.pop() //数组的pop方法
+        }
+        sethistory1arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
+    }
+    //===================================================================================================================== 
+    
+    
     /*function changename(e){  这样也是可以的 但是userobj整个对象被更新
         setuserobj({name:e.target.value})
     }*/
@@ -194,6 +227,39 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         }
         sethistory2arry(data)  
     }
+    //既往病史表格新增按钮增加一行事件
+    //==================================================================================================================
+    function his2clickadd(){ //点击新增增加一行事件
+        let data=Object.assign([],history2arry)
+        if(data.length>=0){//如果是最后一行
+            data.push({ //数组里新增一行空数据 
+                userid:data[0].userid,
+                name:data[0].username,
+                jibingmingchen:'',
+                kaishishijian:moment().format('YYYY-MM'),
+                jieshushijian:moment().format('YYYY-MM'),
+                hospitary:'',
+                zhiliaojieguo:'',
+                beizhu:''
+            })
+        }
+        sethistory2arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
+    }
+    //===================================================================================================================== 
+     //既往病史表格删除按钮删除一行事件
+    //==================================================================================================================
+    function his2clickdelete(){ //点击删除一行事件 
+        let data=Object.assign([],history2arry)
+        console.log('data-length',data.length)
+        if(data.length>=2){//如果大于等于一行
+            data.pop() //数组的pop方法
+        }
+        sethistory2arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
+    }
+    //===================================================================================================================== 
+
+
+
     //更改职业病诊断起止时间view视图时触发数据状态state更新
     //============================================================================================
     function his3datepickerchange(index,date,datestring){ 
@@ -213,7 +279,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     }
     //=============================================================================================
     
-    //职业病诊断表格增加一行事件 
+    //职业病诊断表格回车增加一行事件 
     //==============================================================================================
     function his3enterdown(index,e){ 
         console.log(e)
@@ -233,7 +299,37 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         sethistory3arry(data)  
     }
     //===============================================================================================
-
+   //职业病诊断表格按钮增加一行事件
+    //==================================================================================================================
+    function his3clickadd(){ //点击新增增加一行事件
+        let data=Object.assign([],history3arry)
+        if(data.length>=0){//如果是最后一行
+            data.push({ //数组里新增一行空数据 
+                userid:'01',
+                name:'小白',
+                zhiyebingmingchen:'',
+                kaishishijian:moment().format('YYYY-MM'),
+                jieshushijian:moment().format('YYYY-MM'),
+                hospitary:'',
+                zhenduanjibie:'',
+                beizhu:'' 
+            })
+        }
+        sethistory3arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
+    }
+    //===================================================================================================================== 
+     //职业病诊断表格表格删除按钮删除一行事件
+    //==================================================================================================================
+    function his3clickdelete(){ //点击删除一行事件 
+        let data=Object.assign([],history3arry)
+        console.log('data-length',data.length)
+        if(data.length>=2){//如果大于等于一行
+            data.pop() //数组的pop方法
+        }
+        sethistory3arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
+    }
+    //===================================================================================================================== 
+ 
     //本方法由子组件视图操作触发 更新state数据状态中的图片数据
     //=====================================================================================================
     function changeimageadta(formdata){ //由子组件触发的 父组件中state改变的方法 本方法是为了改变图片数据  子组件访问父组件的形式
@@ -243,7 +339,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     }
     //===================================================================================
     
-   
+    //useImperativeHandle包裹的方法 被父组件调用
     //=========================================================================
     useImperativeHandle(ref, () => ({ //forwardRef,useImperativeHandle两个库用于父子组件的ref节点传递
         updateworkerbasedatabyuserid:(id)=>{ //按照userid更新数据 新增或者更新 id要从变量获取，因为id涉及到是当前用户还是后面管理员选择的用户
@@ -327,12 +423,14 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
             {/*=================================================================================================================================================*/}
             <div className='history1'>
                 <div style={{height:'10%',borderBottom:'.1px solid black'}}>职业病史及健康危害史 </div>
-                <div className="historydiv1">
+                <div className="historydiv1" style={{position:'relative'}}>
                     <div>起止时间</div>
                     <div>工作单位</div>
                     <div>工种</div>
                     <div>接触职业病危害因素</div>
                     <div>防护措施</div>
+                    <Button onClick={his1clickadd} style={{position:'absolute',left:'45vw',width:'5vw',height:'60%',display:displaybutton}}>新增</Button>
+                    <Button onClick={his1clickdelete} style={{position:'absolute',left:'50vw',width:'5vw',height:'60%',display:displaybutton}}>删除</Button> 
                 </div>
                 {
                     history1arry.map((item,index)=>{   //根据数组循环生成html表格
@@ -348,6 +446,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
                         )
                     })
                 } 
+                
             </div>
             {/*=================================================================================================================================*/}
             
@@ -355,12 +454,14 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
             {/*=================================================================================================================================*/}
             <div className='history2'>
                 <div style={{height:'10%',borderBottom:'.1px solid black'}}>既往病史 </div>
-                    <div className="historydiv">
+                    <div className="historydiv" style={{position:'relative'}}>
                         <div>疾病名称</div>
                         <div>诊断时间</div>
                         <div>诊断医院</div>
                         <div>治疗结果</div>
                         <div>备注</div>
+                        <Button onClick={his2clickadd}  style={{position:'absolute',left:'45vw',width:'5vw',height:'60%',display:displaybutton}}>新增</Button>
+                        <Button onClick={his2clickdelete} style={{position:'absolute',left:'50vw',width:'5vw',height:'60%',display:displaybutton}}>删除</Button> 
                     </div>
                     {
                         history2arry.map((item,index)=>{
@@ -382,12 +483,14 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
             {/*=========================================================================================================================================*/}
             <div className='diagnosis'>
                 <div style={{height:'12%',borderBottom:'.1px solid black'}}>职业病诊断 </div>
-                    <div className="historydiv" >
+                    <div className="historydiv" style={{position:'relative'}}>
                         <div>职业病名称</div>
                         <div>诊断时间</div>
                         <div>诊断医院</div>
                         <div>诊断级别</div>
                         <div>备注</div>
+                        <Button onClick={his3clickadd} style={{position:'absolute',left:'45vw',width:'5vw',height:'60%',display:displaybutton}}>新增</Button>
+                        <Button onClick={his3clickdelete} style={{position:'absolute',left:'50vw',width:'5vw',height:'60%',display:displaybutton}}>删除</Button> 
                     </div>
                     {
                         history3arry.map((item,index)=>{
