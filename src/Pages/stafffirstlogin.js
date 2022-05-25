@@ -5,17 +5,60 @@ import { getworkerbasedata } from '../api/api'
 import { useState,useEffect,useRef } from 'react';
 import { connect } from 'react-redux'
 import { updateToUserinfo } from '../store/actions/userinfo-actions';
-
-
+import moment from 'moment';
+import table1 from '../components/table1';
+const dateFormat = 'YYYY-MM';
 
 
 function Stafffristlogin(props){
-	const [userid,setUserid]=useState(props.reduxdata.userinfo.userid) //从redux中读取userid
+	//const [userid,setUserid]=useState(props.reduxdata.userinfo.userid) //从redux中读取userid
+	const [userid,setUserid]=useState(sessionStorage.getItem('userid'))	
 	const [userobj,setUserobj]=useState([])
+	const [history1arry,sethistory1arry]=useState( //即便是从ajax取值 初始数据也要进行设置 起止日期格式和userid还有name容易报错
+		[{
+		    userid:sessionStorage.getItem('userid'),
+		    name:sessionStorage.getItem('name'),
+		    kaishishijian:moment().format('YYYY-MM'),
+		    jieshushijian:moment().format('YYYY-MM'),
+		    gongzuodanwei:'',
+		    gongzhong:'',
+		    weihaiyinsu:'',
+		    fanghucuoshi:''
+		}]
+	    ) 
+	const [history2arry,sethistory2arry]=useState([
+		{
+		    userid:sessionStorage.getItem('userid'),
+		    name:sessionStorage.getItem('name'),
+		    jibingmingchen:'',
+		    kaishishijian:moment().format('YYYY-MM'),
+		    jieshushijian:moment().format('YYYY-MM'),
+		    hospitary:'',
+		    zhiliaojieguo:'',
+		    beizhu:''
+		}
+	    ]) //初始化用来循环history2的数组
+	const [history3arry,sethistory3arry]=useState([
+		{
+		    userid:sessionStorage.getItem('userid'),
+		    name:sessionStorage.getItem('name'),
+		    zhiyebingmingchen:'',
+		    kaishishijian:moment().format('YYYY-MM'),
+		    jieshushijian:moment().format('YYYY-MM'),
+		    hospitary:'',
+		    zhenduanjibie:'',
+		    beizhu:'' 
+		}
+	    ])
+
 	const table1dom = useRef() //通过ref实现父组件获取子组件方法  子组件要结合forwardRef,useImperativeHandle
 	const clicktijiao=()=>{  //提交按钮的方法
 		console.log('table1dom',table1dom)
 		table1dom.current.updateworkerbasedatabyuserid(userid) //通过ref获取子组件方法 从父组件中触发子组件方法 这里传参由于是初登录页面 目前登录的userid即可
+		table1dom.current.updatetablehis1byuserid(userid)
+		table1dom.current.updatetablehis2byuserid(userid)
+		table1dom.current.updatetablehis3byuserid(userid)
+		table1dom.current.changeuserisfirstlogin(userid) //userid作为实参传入子组件方法的形参id中
 	}
 
 	useEffect(()=>{
@@ -23,7 +66,7 @@ function Stafffristlogin(props){
 			const result=await getworkerbasedata(userid)//可能查不到数据 查到数据则更新 查不到数据则给个初始化的值
 			if(result.length==0){ //没查到数据时给个空值
 				setUserobj({  
-					name:'',
+					name:sessionStorage.getItem('name'),
 					sex:'',
 					area:'',
 					marriage:'',
@@ -34,7 +77,7 @@ function Stafffristlogin(props){
 					image:null
 				    })
 			} else {
-			setUserobj(result[0])} //是更新成功了的 至于为何输出为空 是因为setuserobj()是异步执行的 
+			setUserobj(result[0])} //是更新成功了的 至于为何输出为空 是因为setuserobj()是异步执行的  但是在父组件state更改之前 子组件的
 			
 		}
 		
@@ -51,8 +94,16 @@ function Stafffristlogin(props){
 			<App ishidden='none' name='小白' role='员工'/> 
 				<p style={{width:'45vw',margin:'0 auto'}}>xxx,首次登录，请您填写以下信息</p>
 			<Table1 
-			input={false} disabled={true} userobj={userobj} ref={table1dom}
+			input={false} 
+			disabled={true} 
+			userobj={userobj} 
+			ref={table1dom}
 			displaybutton='inline-block'
+			userid={sessionStorage.getItem('userid')}
+			name={sessionStorage.getItem('name')}
+			history1arry={history1arry}
+			history2arry={history2arry}
+			history3arry={history3arry}
 			/>
 		</div>
 		)

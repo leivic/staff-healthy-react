@@ -5,7 +5,14 @@ import { Button,Input } from 'antd';
 import Avadar from './uploadimage'
 import { DatePicker, Space } from 'antd';
 import moment from 'moment'; //日期格式化组件
-import { updateworkerbasedatabyuserid } from '../api/api'
+import { updateworkerbasedatabyuserid,
+        gettablehis1,
+        updatetablehis1byuserid,
+        gettablehis2,
+        updatetablehis2byuserid,
+        gettablehis3,
+        updatetablehis3byuserid,
+        changeuserisfirstlogin } from '../api/api'
 
 
 
@@ -61,40 +68,13 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     const [isInputabled,setisInputadbled]=useState(props.input) //isinputeabled字段控制作为组件属性控制是否可编辑
     const [isdiabled,setisdiabled]=useState(props.disabled)     //字段作为组件属性控制组件是否可选
     const [history1arry,sethistory1arry]=useState( //即便是从ajax取值 初始数据也要进行设置 起止日期格式和userid还有name容易报错
-        [{
-            userid:'01',
-            name:'小白',
-            kaishishijian:'2021-07',
-            jieshushijian:'2021-08',
-            gongzuodanwei:'长安',
-            gongzhong:'操作工',
-            weihaiyinsu:'粉尘',
-            fanghucuoshi:'口罩'
-        }]
+        props.history1arry
     ) //初始化用来循环histrory1的数组 常见的用法是组件外axios获取数据 
     const [history2arry,sethistory2arry]=useState([
-        {
-            userid:'01',
-            name:'小白',
-            jibingmingchen:'低温症',
-            kaishishijian:'2021-05',
-            jieshushijian:'2021-09',
-            hospitary:'重庆第三军医院',
-            zhiliaojieguo:'健康',
-            beizhu:'无'
-        }
+        props.history2arry
     ]) //初始化用来循环history2的数组
     const [history3arry,sethistory3arry]=useState([
-        {
-            userid:'01',
-            name:'小白',
-            zhiyebingmingchen:'低温症',
-            kaishishijian:'2021-05',
-            jieshushijian:'2021-07',
-            hospitary:'重庆第三军医院',
-            zhenduanjibie:'A',
-            beizhu:'无' 
-        }
+        props.history3arry 
     ])
     //============================================================================================================================
     const [displaybutton,setdisplaybutton]=useState(props.displaybutton)//这个state控制增减行的button能不能使用
@@ -135,8 +115,8 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         let data=Object.assign([],history1arry)
         if(e.keyCode === 13 && data.length-1 === index){//如果是最后一行和按下的键是回车键
             data.push({ //数组里新增一行空数据 
-                userid:data[0].userid,
-                name:data[0].username,
+                userid:props.userid,
+                name:props.name,
                 kaishishijian: moment().format('YYYY-MM'),
                 jieshushijian: moment().format('YYYY-MM'),
                 gongzuodanwei:'',
@@ -154,8 +134,8 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         let data=Object.assign([],history1arry)
         if(data.length>=0){//如果是最后一行
             data.push({ //数组里新增一行空数据 
-                userid:data[0].userid,
-                name:data[0].username,
+                userid:props.userid,
+                name:props.name,
                 kaishishijian: moment().format('YYYY-MM'),
                 jieshushijian: moment().format('YYYY-MM'),
                 gongzuodanwei:'',
@@ -172,7 +152,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     function his1clickdelete(){ //点击删除一行事件 
         let data=Object.assign([],history1arry)
         console.log('data-length',data.length)
-        if(data.length>=2){//如果大于等于一行
+        if(data.length>=1){//如果大于等于一行
             data.pop() //数组的pop方法
         }
         sethistory1arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
@@ -233,8 +213,8 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         let data=Object.assign([],history2arry)
         if(data.length>=0){//如果是最后一行
             data.push({ //数组里新增一行空数据 
-                userid:data[0].userid,
-                name:data[0].username,
+                userid:props.userid,
+                name:props.name,
                 jibingmingchen:'',
                 kaishishijian:moment().format('YYYY-MM'),
                 jieshushijian:moment().format('YYYY-MM'),
@@ -251,7 +231,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     function his2clickdelete(){ //点击删除一行事件 
         let data=Object.assign([],history2arry)
         console.log('data-length',data.length)
-        if(data.length>=2){//如果大于等于一行
+        if(data.length>=1){//如果大于等于一行
             data.pop() //数组的pop方法
         }
         sethistory2arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
@@ -305,8 +285,8 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         let data=Object.assign([],history3arry)
         if(data.length>=0){//如果是最后一行
             data.push({ //数组里新增一行空数据 
-                userid:'01',
-                name:'小白',
+                userid:props.userid,
+                name:props.name,
                 zhiyebingmingchen:'',
                 kaishishijian:moment().format('YYYY-MM'),
                 jieshushijian:moment().format('YYYY-MM'),
@@ -323,7 +303,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     function his3clickdelete(){ //点击删除一行事件 
         let data=Object.assign([],history3arry)
         console.log('data-length',data.length)
-        if(data.length>=2){//如果大于等于一行
+        if(data.length>=1){//如果大于等于一行
             data.pop() //数组的pop方法
         }
         sethistory3arry(data)  //将更新的数据赋值到 state中 从而重渲染dom 更新视图 
@@ -339,7 +319,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     }
     //===================================================================================
     
-    //useImperativeHandle包裹的方法 被父组件调用
+    //useImperativeHandle包裹的方法 可通过ref被父组件调用 
     //=========================================================================
     useImperativeHandle(ref, () => ({ //forwardRef,useImperativeHandle两个库用于父子组件的ref节点传递
         updateworkerbasedatabyuserid:(id)=>{ //按照userid更新数据 新增或者更新 id要从变量获取，因为id涉及到是当前用户还是后面管理员选择的用户
@@ -348,7 +328,107 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
                     console.log('updateworkerbasedatabyuserid-res',res)
                 }
             )
-        } 
+        },
+        gettablehis1:(id)=>{ //id从父组件获得
+            gettablehis1(id).then(res=>{
+                sethistory1arry(res.data) //将获得的数据更新当前页面的state
+            })
+        },
+        gettablehis2:(id)=>{ //返回一个promise
+            gettablehis2(id).then(res=>{
+                sethistory2arry(res.data) 
+            })
+        },
+        gettablehis3:(id)=>{
+            gettablehis3(id).then(res=>{
+                sethistory3arry(res.data)
+            })
+        },
+        updatetablehis1byuserid:async (id)=>{ //id在外层 因为这个id是从父组件传进来的，其他的参数可以从本组件获得
+            console.log('updatetablehis1byuserid-length',history1arry.length,)
+            console.log('updatetablehis1byuserid-history1arry',history1arry)
+            if(history1arry.length==0){ //如果本组件history1arry没有数据时 仅删除数据即可
+
+                await updatetablehis1byuserid(id,history1arry.length) 
+            }else if(history1arry.length>0){ //循环增加每一条数据 
+                await updatetablehis1byuserid(id,0) //大于0时 也先把数据删除干净再添加 这个接口第二个参数传参传0时就是一个纯粹的删除方法
+                for (const x of history1arry) {
+                    console.log('updatetablehis1byuserid-x',x)
+                    await updatetablehis1byuserid(
+                        id,
+                        history1arry.length,
+                        x.name,
+                        x.kaishishijian,
+                        x.jieshushijian,
+                        x.gongzuodanwei,
+                        x.gongzhong,
+                        x.weihaiyinsu,
+                        x.fanghucuoshi).then(
+                            res=>{
+                                console.log(res)
+                            }
+                        )
+                }
+            }
+            return "success"
+        },
+        updatetablehis2byuserid:async (id)=>{ //id在外层 因为这个id是从父组件传进来的，其他的参数可以从本组件获得
+           
+            if(history2arry.length==0){ //如果本组件history1arry没有数据时 仅删除数据即可
+
+                await updatetablehis2byuserid(id,history2arry.length) 
+            }else if(history2arry.length>0){ //循环增加每一条数据 
+                await updatetablehis2byuserid(id,0) //大于0时 也先把数据删除干净再添加 这个接口第二个参数传参传0时就是一个纯粹的删除方法
+                for (const x of history2arry) {
+                   
+                    await updatetablehis2byuserid(
+                        id,
+                        history2arry.length,
+                        x.name,
+                        x.jibingmingchen,
+                        x.kaishishijian,
+                        x.jieshushijian,
+                        x.hospitary,
+                        x.zhiliaojieguo,
+                        x.beizhu).then(
+                            res=>{
+                                console.log(res)
+                            }
+                        )
+                }
+            }
+            return "success"
+        },
+        updatetablehis3byuserid:async (id)=>{ //id在外层 因为这个id是从父组件传进来的，其他的参数可以从本组件获得
+           
+            if(history3arry.length==0){ //如果本组件history1arry没有数据时 仅删除数据即可
+
+                await updatetablehis3byuserid(id,history3arry.length) 
+            }else if(history3arry.length>0){ //循环增加每一条数据 
+                await updatetablehis3byuserid(id,0) //大于0时 也先把数据删除干净再添加 这个接口第二个参数传参传0时就是一个纯粹的删除方法
+                for (const x of history3arry) {
+                   
+                    await updatetablehis3byuserid(
+                        id,
+                        history3arry.length,
+                        x.name,
+                        x.zhiyebingmingchen,
+                        x.kaishishijian,
+                        x.jieshushijian,
+                        x.hospitary,
+                        x.zhenduanjibie,
+                        x.beizhu).then(
+                            res=>{
+                                console.log(res)
+                            }
+                        )
+                }
+            }
+            return "success"
+        }, changeuserisfirstlogin:(id)=>{
+            changeuserisfirstlogin(id,1) //1是非首次登录的状态
+        }
+              
       }))
     //================================================================================
     
@@ -358,7 +438,10 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     useEffect(()=>{ //当组件第一次加载 和重渲染dom时（理论上更新state，传入组件的prop改变 均会触发重渲染dom），触发useEffect副作用
         console.log('table1-userobj',userobj)
         console.log('table1-history1arry',history1arry)
-        setuserobj(props.userobj)
+        setuserobj(props.userobj) //这几个参数在父组件中要通过axios获得数据 但是在本组件中userstate只初始化一次 父组件中获得数据 props更新后 本组件中的state已经确定 所以就要触发更新
+        sethistory1arry(props.history1arry)
+        sethistory2arry(props.history2arry)
+        sethistory3arry(props.history3arry)
     },[props]) //userEFFect 如果没有第二个参数 则如上注释 重渲染dom和组件第一次加载触发Effect 有第二个参数则第二个参数数组里的变量变化时就执行Effect() 第二个参数为[]则只有组件加载时部署
     //=================================================================================================
 
