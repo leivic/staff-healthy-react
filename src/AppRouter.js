@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route,Routes,Navigate } from "react-router-dom";
 import Stafffirstlogin from './Pages/stafffirstlogin'
+import Staffsecondlogin from './Pages/staffsecondlogin'
 /*import List from './Pages/List'
 import Tablebox2 from './Pages/tablebox2'
 import Basestaffloginsecondtime from'./Pages/basestafflogin'*/
@@ -32,8 +33,14 @@ function AppRouter() {
               <Stafffirstlogin/>        {/*被拦截组件*/}
              </RequireAuth> 
           } />{/*员工第一次登录界面 私有路由*/}
-          {/*<Privateroute path="/stafffirstlogin" component={<Stafffirstlogin/>}></Privateroute> {/*使用封装的私有路由组件*/}
+          {/*<Privateroute path="/stafffirstlogin" component={<Stafffirstlogin/>}></Privateroute> {/*使用封装的私有路由组件,无token不能进入这个路由*/}
+          <Route path="/staffsecondlogin/"  element={
+             <RequireAuth>              {/*拦截组件*/}
+              <Staffsecondlogin/>        {/*被拦截组件*/}
+             </RequireAuth> 
+          } />{/*员工非第一次登录界面 私有路由*/}
         </Routes>
+        
     </Router>
   );
 }

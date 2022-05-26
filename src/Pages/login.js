@@ -49,8 +49,8 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 						// window.location.href = "/stafffirstlogin" 也可跳转 但是跳转后是重载页面程序 redux里的数据丢失成初始化的结果 session里的token没丢失 是因为session是浏览器提供的api  所以token仍然没丢失 
 						navigate('/stafffirstlogin') //路由更新 程序并没有重载 redux里的数据能不会丢失
 						
-					}else if(res.data.userinfo[0].isfirstlogin==1){//当员工不是第一次登录
-
+					}else if(res.data.userinfo[0].isfirstlogin==1){//当员工不是第一次登录 跳转到另一个路由
+						navigate('/staffsecondlogin') 
 					}
 				break;
 			}

@@ -70,12 +70,12 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
     const [history1arry,sethistory1arry]=useState( //即便是从ajax取值 初始数据也要进行设置 起止日期格式和userid还有name容易报错
         props.history1arry
     ) //初始化用来循环histrory1的数组 常见的用法是组件外axios获取数据 
-    const [history2arry,sethistory2arry]=useState([
+    const [history2arry,sethistory2arry]=useState(
         props.history2arry
-    ]) //初始化用来循环history2的数组
-    const [history3arry,sethistory3arry]=useState([
+    ) //初始化用来循环history2的数组
+    const [history3arry,sethistory3arry]=useState(
         props.history3arry 
-    ])
+    )
     //============================================================================================================================
     const [displaybutton,setdisplaybutton]=useState(props.displaybutton)//这个state控制增减行的button能不能使用
     //===============================================================================
@@ -439,9 +439,8 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         console.log('table1-userobj',userobj)
         console.log('table1-history1arry',history1arry)
         setuserobj(props.userobj) //这几个参数在父组件中要通过axios获得数据 但是在本组件中userstate只初始化一次 父组件中获得数据 props更新后 本组件中的state已经确定 所以就要触发更新
-        sethistory1arry(props.history1arry)
-        sethistory2arry(props.history2arry)
-        sethistory3arry(props.history3arry)
+        
+        
     },[props]) //userEFFect 如果没有第二个参数 则如上注释 重渲染dom和组件第一次加载触发Effect 有第二个参数则第二个参数数组里的变量变化时就执行Effect() 第二个参数为[]则只有组件加载时部署
     //=================================================================================================
 

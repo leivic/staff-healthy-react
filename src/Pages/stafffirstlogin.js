@@ -1,16 +1,17 @@
-import store from '../store/store'
+import { useNavigate } from 'react-router-dom'
 import App from '../components/menu'
 import Table1 from '../components/table1'
 import { getworkerbasedata } from '../api/api'
 import { useState,useEffect,useRef } from 'react';
 import { connect } from 'react-redux'
-import { updateToUserinfo } from '../store/actions/userinfo-actions';
 import moment from 'moment';
-import table1 from '../components/table1';
 const dateFormat = 'YYYY-MM';
 
 
+//staff 员工角色首次登录的页面
+
 function Stafffristlogin(props){
+	const navigate = useNavigate()
 	//const [userid,setUserid]=useState(props.reduxdata.userinfo.userid) //从redux中读取userid
 	const [userid,setUserid]=useState(sessionStorage.getItem('userid'))	
 	const [userobj,setUserobj]=useState([])
@@ -52,13 +53,15 @@ function Stafffristlogin(props){
 	    ])
 
 	const table1dom = useRef() //通过ref实现父组件获取子组件方法  子组件要结合forwardRef,useImperativeHandle
-	const clicktijiao=()=>{  //提交按钮的方法
+	const clicktijiao=async ()=>{  //提交按钮的方法
 		console.log('table1dom',table1dom)
-		table1dom.current.updateworkerbasedatabyuserid(userid) //通过ref获取子组件方法 从父组件中触发子组件方法 这里传参由于是初登录页面 目前登录的userid即可
-		table1dom.current.updatetablehis1byuserid(userid)
-		table1dom.current.updatetablehis2byuserid(userid)
-		table1dom.current.updatetablehis3byuserid(userid)
-		table1dom.current.changeuserisfirstlogin(userid) //userid作为实参传入子组件方法的形参id中
+		await table1dom.current.updateworkerbasedatabyuserid(userid) //通过ref获取子组件方法 从父组件中触发子组件方法 这里传参由于是初登录页面 目前登录的userid即可
+		await table1dom.current.updatetablehis1byuserid(userid)
+		await table1dom.current.updatetablehis2byuserid(userid)
+		await table1dom.current.updatetablehis3byuserid(userid)
+		await table1dom.current.changeuserisfirstlogin(userid) //userid作为实参传入子组件方法的形参id中
+	
+		navigate('/staffsecondlogin')  //数据更新完后跳转至另一个路由界面
 	}
 
 	useEffect(()=>{
