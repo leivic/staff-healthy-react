@@ -5,16 +5,36 @@ import { getworkerbasedata } from '../api/api'
 import { useState,useEffect,useRef } from 'react';
 import { connect } from 'react-redux'
 import moment from 'moment';
+import { Button,notification,Space } from 'antd';
 const dateFormat = 'YYYY-MM';
 
 
 //staff 员工角色首次登录的页面
 
+
+const close = () => { //antd提供通知框组件功能
+	
+      };
+      
+ 
+
+
+
 function Stafffristlogin(props){
 	const navigate = useNavigate()
 	//const [userid,setUserid]=useState(props.reduxdata.userinfo.userid) //从redux中读取userid
 	const [userid,setUserid]=useState(sessionStorage.getItem('userid'))	
-	const [userobj,setUserobj]=useState([])
+	const [userobj,setUserobj]=useState({  
+		name:sessionStorage.getItem('name'),
+		sex:'',
+		area:'',
+		marriage:'',
+		educational:'',
+		shihao:'',
+		canjiagongzuoshijian:'',
+		idcard:'',
+		image:null
+	    })
 	const [history1arry,sethistory1arry]=useState( //即便是从ajax取值 初始数据也要进行设置 起止日期格式和userid还有name容易报错
 		[{
 		    userid:sessionStorage.getItem('userid'),
@@ -52,6 +72,9 @@ function Stafffristlogin(props){
 		}
 	    ])
 
+
+
+
 	const table1dom = useRef() //通过ref实现父组件获取子组件方法  子组件要结合forwardRef,useImperativeHandle
 	const clicktijiao=async ()=>{  //提交按钮的方法
 		console.log('table1dom',table1dom)
@@ -64,38 +87,46 @@ function Stafffristlogin(props){
 		navigate('/staffsecondlogin')  //数据更新完后跳转至另一个路由界面
 	}
 
-	useEffect(()=>{
-		const fetchUserobj=async()=>{  
-			const result=await getworkerbasedata(userid)//可能查不到数据 查到数据则更新 查不到数据则给个初始化的值
-			if(result.length==0){ //没查到数据时给个空值
-				setUserobj({  
-					name:sessionStorage.getItem('name'),
-					sex:'',
-					area:'',
-					marriage:'',
-					educational:'',
-					shihao:'',
-					canjiagongzuoshijian:'',
-					idcard:'',
-					image:null
-				    })
-			} else {
-			setUserobj(result[0])} //是更新成功了的 至于为何输出为空 是因为setuserobj()是异步执行的  但是在父组件state更改之前 子组件的
+	const openNotification = (placement) => { //antd提供通知框组件功能 通过通知框组件里的button触发跳转提交数据跳转方法
+		const key = `open${Date.now()}`;
+		const btn = (
+		<Space>
+		  <Button type="primary" size="small" onClick={() => notification.close(key)}>
+		    取消
+		  </Button>		
+		  <Button type="primary" size="small" onClick={async()=>{
 			
-		}
+			notification.close(key)
+			setTimeout(() => {
+			 clicktijiao();	
+			}, 100);//0.1s后再执行这个方法
+			}}>
+		    确定
+		  </Button>
+		</Space>
+		);
+		notification.open({
+		  message: '通知',
+		  description:
+		    '确认基本信息填写完毕?',
+		  placement,
+		  btn,
+		  key,
+		  onClose: close,
+		});
+	  };
+
+
+
+	useEffect(()=>{
 		
-		fetchUserobj()  /*.then(()=>{
-			console.log('Stafffristlogin-userobj',userobj) //这里的输出结果可能不如你所想的更新了 因为setstate在某些情况下是异步的
-		})*/
 	},[]) //
 
 
 
 		return ( //函数式组件内部不用render（）函数
-		<div>   
-			<button onClick={clicktijiao}>提交数据</button>			
-			<App ishidden='none' name='小白' role='员工'/> 
-				<p style={{width:'45vw',margin:'0 auto'}}>xxx,首次登录，请您填写以下信息</p>
+		<div>   			
+				<p style={{width:'45vw',margin:'0 auto'}}>{sessionStorage.getItem('name')},首次登录，请您填写以下信息</p>
 			<Table1 
 			input={false} 
 			disabled={true} 
@@ -108,6 +139,7 @@ function Stafffristlogin(props){
 			history2arry={history2arry}
 			history3arry={history3arry}
 			/>
+			<Button style={{marginLeft:'70vw'}} type="primary" onClick={()=>openNotification('top')}>提交</Button>
 		</div>
 		)
 	

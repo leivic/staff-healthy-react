@@ -7,7 +7,6 @@ import './index.css'; //引入全局样式到入口文件
 import AppRouter from './AppRouter';
 import {Provider} from "react-redux";  //react-redux库和redux库是两种东西 redux库是可以用在其他js程序中的，在react中也可以使用 但是react-redux可以方便地把react和redux联系在一起  用法也和只用redux不同
 import { Layout } from 'antd'; 
-const { Header, Footer, Sider, Content } = Layout; //ant-design组件
 
 //redux store的3个方法测试redux功能
 //==================================================================================================
@@ -28,14 +27,16 @@ store.dispatch(addToCart('Juice 2L', 1, 250));
 ReactDOM.render( //App ishidden属性判断文本框是否隐藏 
  <Provider store={store}> {/*使用react-redux必要的一步  store中的数据都被存在顶层组件中了*/}
   <div>
-    <Layout>
+   {/* <Layout>
       <Header></Header>
       <Content>
         <AppRouter/>
       </Content>
       <Footer></Footer>
-    </Layout>
-  </div>
+    </Layout>*/}
+    <AppRouter/>
+    
+   </div>
   </Provider>
   ,
   document.getElementById('root')

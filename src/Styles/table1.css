@@ -2,7 +2,7 @@
 *{
 	box-sizing: border-box; /*盒模型不同，所以宽度100%会超出边界 盒模型的区别主要在border和padding是否会超出边界*/
 	-webkit-box-sizing: border-box;
-    	-moz-box-sizing: border-box;	
+	    -moz-box-sizing: border-box;
 }
 input{
 	height:  100%;
@@ -10,10 +10,12 @@ input{
 	border: none;
 	
 }
+.ant-input{   /*这个class是antd组件里面封装的样式 在浏览器控制台看到本质的html 属性是什么 然后自定义样式覆盖它 不管封装多少层 在浏览器上最终都是编译成最本质的 html+css+js执行 也没有什么react 没有antd */
+	border: none;
+}
 .flexbox{
 	margin: 20px auto;
 	width: 45vw;
-	background-color: whitesmoke;
 }
 .indextoolbar{
 	margin: 10px auto; /*得有宽度才能*/
@@ -24,7 +26,7 @@ input{
 .basedata{
 	width: 100%;
 	height: 12.6vw;
-	border: .1px solid black;
+	border: .1px solid grey;
 	border-top: none;
 	border-bottom: none;
 	display: flex;
@@ -32,39 +34,39 @@ input{
 }
 .basedatafloat1{
 	width: 30%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .basedatafloat1 div{
 	width: 100%;
 	height: 20%;
-	border-top:.1px solid black;
+	border-top:.1px solid grey;
 	
 }
 .basedatamiddle{
 	width: 40%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .basedatamiddle > div{
 	display: flex;
 	width: 100%;
 	height: 20%;
-	border-top: .1px solid black;
+	border-top: .1px solid grey;
 	
 }
 .basedataimage {
 	width: 30%;
 	height: 100%;
-	border-top: .1px solid black;
+	border-top: .1px solid grey;
 }
  .middlediv1{
 	height: 100%;
 	width: 40%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .middlediv2{
 	height: 100%;
 	width: 20%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .middlediv3{
 	height: 100%;
@@ -72,20 +74,20 @@ input{
 }
 .history1{
 	width: 100%;
-	border: .1px solid black;
+	border: .1px solid grey;
 	border-bottom: none;
 	border-right: none;	
 }
 .history2{
 	width: 100%;
-	border: .1px solid black;
+	border: .1px solid grey;
 	border-top: none;
 	border-bottom: none;
 	border-right: none;	
 }
 .diagnosis{
 	width: 100%;
-	border: .1px solid black;
+	border: .1px solid grey;
 	border-top: none;
 	border-bottom: none;
 	border-right: none;		
@@ -93,7 +95,7 @@ input{
 .historydiv1{
 	height: 3.5vw;
 	width: 100%;
-	border-bottom: .1px solid black;
+	border-bottom: .1px solid grey;
 	display: flex;
 	text-align: center;
 }
@@ -101,33 +103,33 @@ input{
 .historydiv1 > div:nth-child(1){
 	width: 25%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .historydiv1 > div:nth-child(2){
 	width: 23%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .historydiv1 > div:nth-child(3){
 	width: 16%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .historydiv1 > div:nth-child(4){
 	width: 18%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .historydiv1 > div:nth-child(5){
 	width: 18%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 
 .historydiv{
 	height: 3.5vw;
 	width: 100%;
-	border-bottom: .1px solid black;
+	border-bottom: .1px solid grey;
 	display: flex;
 	text-align: center;
 }
@@ -135,27 +137,27 @@ input{
 .historydiv > div:nth-child(1){
 	width: 22%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .historydiv > div:nth-child(2){
 	width: 26%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .historydiv > div:nth-child(3){
 	width: 18%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .historydiv > div:nth-child(4){
 	width: 20%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 .historydiv > div:nth-child(5){
 	width: 14%;
 	height: 100%;
-	border-right: .1px solid black;
+	border-right: .1px solid grey;
 }
 
-input[disabled]{color:black !important;opacity:1} /**/
+input[disabled]{color:black !important;opacity:1} /*改变标签disabled时的默认样式*/

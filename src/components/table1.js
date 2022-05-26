@@ -1,5 +1,5 @@
 import React from 'react';
-import  '../Styles/Index.css';
+import  '../Styles/table1.css';
 import { useState,useEffect,useRef,forwardRef,useImperativeHandle } from 'react';
 import { Button,Input } from 'antd';
 import Avadar from './uploadimage'
@@ -504,7 +504,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
             {/*职业病视图*/}
             {/*=================================================================================================================================================*/}
             <div className='history1'>
-                <div style={{height:'10%',borderBottom:'.1px solid black'}}>职业病史及健康危害史 </div>
+                <div style={{height:'10%',borderBottom:'.1px solid grey',borderRight:'.1px solid grey'}}>职业病史及健康危害史 </div>
                 <div className="historydiv1" style={{position:'relative'}}>
                     <div>起止时间</div>
                     <div>工作单位</div>
@@ -535,7 +535,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
             {/*既往病史视图*/}
             {/*=================================================================================================================================*/}
             <div className='history2'>
-                <div style={{height:'10%',borderBottom:'.1px solid black'}}>既往病史 </div>
+                <div style={{height:'10%',borderBottom:'.1px solid grey',borderRight:'.1px solid grey'}}>既往病史 </div>
                     <div className="historydiv" style={{position:'relative'}}>
                         <div>疾病名称</div>
                         <div>诊断时间</div>
@@ -564,7 +564,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
             {/*职业病诊断视图*/}
             {/*=========================================================================================================================================*/}
             <div className='diagnosis'>
-                <div style={{height:'12%',borderBottom:'.1px solid black'}}>职业病诊断 </div>
+                <div style={{height:'12%',borderBottom:'.1px solid grey',borderRight:'.1px solid grey'}}>职业病诊断 </div>
                     <div className="historydiv" style={{position:'relative'}}>
                         <div>职业病名称</div>
                         <div>诊断时间</div>

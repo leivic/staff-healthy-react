@@ -11,9 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-@import '~antd/dist/antd.css'; /*全局引入样式*/
+@import '~antd/dist/antd.css'; /*全局引入样式 直接引入就和写进去差不多*/
 
-.avatar-uploader > .ant-upload { /*从控制台查看组件的html元素本质，在全局样式直接修改*/
+.avatar-uploader > .ant-upload { /*从控制台查看组件的html元素本质，在全局样式直接修改 */
   width: 100%;
   height: 100%;
 }
