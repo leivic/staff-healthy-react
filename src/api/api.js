@@ -107,6 +107,12 @@ import http from './http';
   }
 
 
+  function getavatar(userid){ //根据userid获得其头像
+    return http("get",'/getavatar',{ //http模块直接return是返回一个promise a 是 await后面跟的promise的resolve（）的直接值
+      userid:userid
+    }) 
+  }
+
 export {
   getworkerbasedata,
   updateworkerbasedatabyuserid,
@@ -116,6 +122,7 @@ export {
   updatetablehis2byuserid,
   gettablehis3,
   updatetablehis3byuserid,
-  changeuserisfirstlogin
+  changeuserisfirstlogin,
+  getavatar 
 }
 

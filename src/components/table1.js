@@ -496,7 +496,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
                     </div>
                 </div>
                 <div className='basedataimage'>
-                    <Avadar isdiabled={isdiabled} changeimage={changeimageadta}/> {/*changeimage 可在子组件中通过props取出*/}
+                    <Avadar userid={props.userid} isdiabled={isdiabled} changeimage={changeimageadta}/> {/*changeimage 可在子组件中通过props取出*/}
                 </div>
             </div>
             {/*=================================================================================================================================================*/}
