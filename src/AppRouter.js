@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route,Routes,Navigate } from "react-router-dom";
 import Stafffirstlogin from './Pages/stafffirstlogin'
 import Staffsecondlogin from './Pages/staffsecondlogin'
+import Angongloginnavigateto from './Pages/angongloginnavigateto' 
 /*import List from './Pages/List'
 import Tablebox2 from './Pages/tablebox2'
 import Basestaffloginsecondtime from'./Pages/basestafflogin'*/
@@ -43,7 +44,11 @@ function AppRouter() {
              </RequireAuth> 
           } />{/*员工非第一次登录界面 私有路由*/}
         
-        
+          <Route path="/angongloginnavigateto/"  element={
+             <RequireAuth>              {/*拦截组件*/}
+              <Angongloginnavigateto/>        {/*被拦截组件*/}
+             </RequireAuth> 
+          } />{/*安工登录访问路由登录界面 私有路由*/}
         
       
       

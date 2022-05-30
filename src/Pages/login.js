@@ -35,7 +35,9 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 					props.updateToUserinfo(res.data.userinfo[0].name,res.data.userinfo[0].id,res.data.userinfo[0].roleid,res.data.token) //调用redux action  将查询到的信息添加到redux上
 					sessionStorage.setItem('jwttoken',res.data.token)//将token存储在session中
 					sessionStorage.setItem('name',res.data.userinfo[0].name)
-					sessionStorage.setItem('userid',res.data.userinfo[0].id)	
+					sessionStorage.setItem('userid',res.data.userinfo[0].id) //将登录账号的id存进来	
+					sessionStorage.setItem('roleid',res.data.userinfo[0].roleid) //将登录账号的权限存进来
+					sessionStorage.setItem('zone',res.data.userinfo[0].zone) //将登录账号是哪个区域的存进来
 					return res
 				}
 			}
@@ -43,7 +45,7 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 			//console.log('reduxdata',props.reduxdata) 这样可以取到store中的state，但是却是更新之前的state
 			axios.get('http://127.0.0.1:7001/testtoken') //测试用的接口 直接这样访问 提示401 需要token认证
 			switch(res.data.userinfo[0].roleid){//登录成功后 根据登录用户不同的权限跳转向不同的页面
-				case 1:
+				case 1: //当账号的角色是职业病信息员工时
 					if(res.data.userinfo[0].isfirstlogin==0){ //当员工第一次登录
 						console.log('props',props.history)
 						// window.location.href = "/stafffirstlogin" 也可跳转 但是跳转后是重载页面程序 redux里的数据丢失成初始化的结果 session里的token没丢失 是因为session是浏览器提供的api  所以token仍然没丢失 
@@ -52,7 +54,11 @@ function Login(props){ //通过react-redux的库封装 将下方connect中的act
 					}else if(res.data.userinfo[0].isfirstlogin==1){//当员工不是第一次登录 跳转到另一个路由
 						navigate('/staffsecondlogin') 
 					}
-				break;
+					break;
+				case 2: //当账号的角色是各区域安工时  安工是有可能也需要填写职业病信息的 但是初版不用做成那样子
+										//不用考虑是不是第一次登录
+					navigate('/angongloginnavigateto')	 
+					break; 
 			}
 		})
 

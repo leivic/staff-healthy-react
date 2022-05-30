@@ -441,6 +441,23 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         setuserobj(props.userobj) //这几个参数在父组件中要通过axios获得数据 但是在本组件中userstate只初始化一次 父组件中获得数据 props更新后 本组件中的state已经确定 所以就要触发更新
         
         
+        /*
+        这部分如果不写  类似angongloginnavigateto 页面切换选中的员工时 组件内数据就不会更新
+         sethistory1arry(props.history1arry)
+        sethistory2arry(props.history2arry)
+        sethistory3arry(props.history3arry)
+        setisInputadbled(props.input)
+        setisdiabled(props.disabled)
+        setdisplaybutton(props.displaybutton)  
+        
+        
+        */
+        sethistory1arry(props.history1arry)
+        sethistory2arry(props.history2arry)
+        sethistory3arry(props.history3arry)
+        setisInputadbled(props.input)
+        setisdiabled(props.disabled)
+        setdisplaybutton(props.displaybutton) 
     },[props]) //userEFFect 如果没有第二个参数 则如上注释 重渲染dom和组件第一次加载触发Effect 有第二个参数则第二个参数数组里的变量变化时就执行Effect() 第二个参数为[]则只有组件加载时部署
     //=================================================================================================
 

@@ -70,6 +70,25 @@ class Avatartest extends React.Component {
     })
   })
 }
+
+shouldComponentUpdate(nextProps){  //没有这个生命周期的话 类似angongloginnavigateto 页面切换选中的员工时 子组件的子组件内数据就不会更新
+  // 比较之前的userid和传来的userid是否相同，如果相同，不重新render; 如果不相同，重新render 减少重复渲染
+    return nextProps.userid!==this.props.userid
+}
+
+componentDidUpdate(nextProps) {
+  getavatar(nextProps.userid).then(res=>{ //res是根据id获得的 base64数据
+    console.log('upload-image,getbase64data',res)
+    console.log('nextProps.userid',nextProps.userid)
+    this.setState({
+      imageUrl:res.data,
+      loading: false,
+    })
+  })
+}
+
+
+
   render() {
     const { loading, imageUrl } = this.state; //解构获取state里的两个状态
     const uploadButton = (   //根据state loading的值决定这个react元素返回的样式

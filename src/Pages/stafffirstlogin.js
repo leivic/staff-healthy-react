@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import App from '../components/menu'
+import Menu from '../components/menu'
 import Table1 from '../components/table1'
 import { getworkerbasedata } from '../api/api'
 import { useState,useEffect,useRef } from 'react';

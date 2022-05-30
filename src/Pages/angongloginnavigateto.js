@@ -1,17 +1,16 @@
-//staff 员工角色非首次登录的页面
-
+import Angongselecttable from '../components/angongselecttable'
+import { getuserdataforangongselect } from '../api/api'
 import Menu from '../components/menu'
 import Table1 from '../components/table1'
 import { getworkerbasedata,gettablehis1,gettablehis2,gettablehis3 } from '../api/api'
-import { useState,useEffect,useRef } from 'react';
-import { connect } from 'react-redux'
+import { useState,useEffect,useRef } from 'react'
 
 
 
-function Staffsecondlogin(props){
-	
+function Angongloginnavigateto(props){
+	const [selecttabledata,setselecttabledata]=useState('')
+	const [userid,setUserid]=useState('') //接下来这个id要传入3个表中 //userid是控制几个table组件最重要的数据 因为这两个路由都是员工登录路由 员工登录后token里存的userid（账号的id）必然就是当前员工的userid 所以可以这么取 要是管理员路由这个userid是要变的	
 	const [getalldata,setgetalldata]=useState(false) //是否已经获取了所有数据 ？
-	const [userid,setUserid]=useState(sessionStorage.getItem('userid')) //userid是控制几个table组件最重要的数据 因为这两个路由都是员工登录路由 员工登录后token里存的userid（账号的id）必然就是当前员工的userid 所以可以这么取 要是管理员路由这个userid是要变的	
 	const [userobj,setUserobj]=useState(false)
 
 
@@ -24,9 +23,29 @@ function Staffsecondlogin(props){
 	const [history3arry,sethistory3arry]=useState(false
 		
 	    )
-	const table1dom = useRef()    
+	const table1dom = useRef()    	
 
-	useEffect(async ()=>{
+
+
+
+	const onAngongselecttablesgetkey =(id)=>{
+		console.log('onAngongselecttablesgetkey-id',id) //id是个数组
+		setUserid(id[0])
+	}
+
+	useEffect(async()=>{
+		
+		const fetchSelecttabledata=async()=>{ //重复获取相同数据组件并不会重复渲染
+			getuserdataforangongselect(sessionStorage.getItem('roleid'),sessionStorage.getItem('zone')).then(
+			//以当前登录的账号的权限和区域来读取后端数据 然后读在前端
+				res=>{
+					console.log('getuserdataforangongselect',res)
+					setselecttabledata(res.data)
+				}
+			)
+		}
+		fetchSelecttabledata()
+
 		const fetchUserobj=async()=>{  
 			const result=await getworkerbasedata(userid)//可能查不到数据 查到数据则更新 查不到数据则给个初始化的值
 			if(result.length==0){ //没查到数据时给个空值
@@ -67,24 +86,26 @@ function Staffsecondlogin(props){
 		fetchTablehis1()
 		fetchTablehis2()
 		fetchTablehis3()
-		
-	},[]) //
 
+	},[userid])	
 
-
-		return ( //函数式组件内部不用render（）函数
-		<div>  {/*用多个变量控制是否渲染子组件 他们的初始值都是false 当都赋值成不是fasle后（说明从后端请求获得到了数据） 则渲染子组件*/}
+	return(
+		<div>
+			
+			<div style={{width:'80vw',margin:'0 auto'}}>
+				{selecttabledata !==''?<Angongselecttable data={selecttabledata} onAngongselecttablesgetkey={(id)=>onAngongselecttablesgetkey(id)}></Angongselecttable>:''}
+			</div>
+			<div>  {/*用多个变量控制是否渲染子组件 他们的初始值都是false 当都赋值成不是fasle后（说明从后端请求获得到了数据） 则渲染子组件*/}
 			 {
 			userobj!==false&history1arry!==false&history2arry!==false&history3arry!==false ?		
 			<div>
-			<Menu  name={sessionStorage.getItem('name')} role='员工'/> 
 			<Table1 
 			input={true} 
 			disabled={false} 
 			userobj={userobj} 
 			ref={table1dom}
 			displaybutton='none' 
-			userid={sessionStorage.getItem('userid')}
+			userid={userid}
 			name={sessionStorage.getItem('name')}
 			history1arry={history1arry}
 			history2arry={history2arry}
@@ -95,12 +116,10 @@ function Staffsecondlogin(props){
 			
 			
 		</div>
-		)
-	
-	
+
+
+		</div>
+	)
 }
 
-export default connect(    //从react-redux引入的方法 用于连接逻辑组件和UI组件 有了这个甚至可以省下//export default Login  
-	//数据  这里的数据和方法会变成Login组件的props 
-	state=>({reduxdata:state})
-    )(Staffsecondlogin)
+export default Angongloginnavigateto

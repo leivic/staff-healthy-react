@@ -113,6 +113,13 @@ import http from './http';
     }) 
   }
 
+  function getuserdataforangongselect(roleid,zone){ //根据登录账号的区域zone获取数据库user表数据
+    return http("get",'/getuserdataforangongselect',{ //
+      zone:zone,
+      roleid:roleid
+    }) 
+  }
+
 export {
   getworkerbasedata,
   updateworkerbasedatabyuserid,
@@ -123,6 +130,7 @@ export {
   gettablehis3,
   updatetablehis3byuserid,
   changeuserisfirstlogin,
-  getavatar 
+  getavatar,
+  getuserdataforangongselect 
 }
 

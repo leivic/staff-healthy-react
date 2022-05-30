@@ -21,11 +21,11 @@ class App extends React.Component {
     const { current } = this.state;
     return (
       <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal" style={{width:'100%'}}>
-        <Menu.Item key="mail" icon={<MailOutlined />}>
+        <Menu.Item key="mail" style={{display:this.props.yuangongjibenxinxi}} icon={<MailOutlined />}>
           基本信息 
         </Menu.Item>
-        <Menu.Item key="app" style={{display:this.props.ishidden}} icon={<AppstoreOutlined />}>
-          权限
+        <Menu.Item key="app" style={{display:this.props.liuchengbiaodan}} icon={<AppstoreOutlined />}>
+          流程表单
         </Menu.Item>
         <span style={{position:'fixed',top:'0',right:'10px'}}>欢迎您，{this.props.name}，当前角色是:{this.props.role}</span>
       </Menu>
