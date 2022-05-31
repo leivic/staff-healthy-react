@@ -435,7 +435,7 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
 
     //当组件第一次加载或重渲染dom时（理论上更新state，传入的prop改变等） 触发的回调方法
     //================================================================================================
-    useEffect(()=>{ //当组件第一次加载 和重渲染dom时（理论上更新state，传入组件的prop改变 均会触发重渲染dom），触发useEffect副作用
+    /*useEffect(()=>{ //当组件第一次加载 和重渲染dom时（理论上更新state，传入组件的prop改变 均会触发重渲染dom），触发useEffect副作用
         console.log('table1-userobj',userobj)
         console.log('table1-history1arry',history1arry)
         setuserobj(props.userobj) //这几个参数在父组件中要通过axios获得数据 但是在本组件中userstate只初始化一次 父组件中获得数据 props更新后 本组件中的state已经确定 所以就要触发更新
@@ -449,16 +449,51 @@ const Table1 = (props, ref) =>{ //父组件的state作为子组件的属性 父�
         setisInputadbled(props.input)
         setisdiabled(props.disabled)
         setdisplaybutton(props.displaybutton)  
-        
-        
         */
-        sethistory1arry(props.history1arry)
+      /*  sethistory1arry(props.history1arry)
         sethistory2arry(props.history2arry)
         sethistory3arry(props.history3arry)
         setisInputadbled(props.input)
         setisdiabled(props.disabled)
         setdisplaybutton(props.displaybutton) 
-    },[props]) //userEFFect 如果没有第二个参数 则如上注释 重渲染dom和组件第一次加载触发Effect 有第二个参数则第二个参数数组里的变量变化时就执行Effect() 第二个参数为[]则只有组件加载时部署
+    },[props])  useEFFect 如果没有第二个参数 则如上注释 重渲染dom和组件第一次加载触发Effect 有第二个参数则第二个参数数组里的变量变化时就执行Effect() 第二个参数为[]则只有组件加载时部署   */  
+    //本来可以像这样只写一个props 功能也能实现 但是这样会造成父组件传入子组件的属性中 任意一个props改变 usereffect()中的方法都会执行 做大量无用功
+    
+    useEffect(()=>{
+        console.log('table1-userobj',userobj)
+        setuserobj(props.userobj) 
+    },[props.userobj]) //当props.userobj的值改变时才执行里面的 console.log('table1-userobj',userobj) setuserobj(props.userobj)
+
+    useEffect(()=>{
+        sethistory1arry(props.history1arry) 
+    },[props.history1arry])
+
+    useEffect(()=>{
+        sethistory2arry(props.history1arry) 
+    },[props.history2arry])
+
+    useEffect(()=>{
+        sethistory3arry(props.history1arry) 
+    },[props.history3arry])
+
+    useEffect(()=>{
+        setisInputadbled(props.input) 
+    },[props.input])
+
+    useEffect(()=>{
+        setisdiabled(props.disabled) 
+    },[props.input])
+    
+    useEffect(()=>{
+        setdisplaybutton(props.displaybutton) 
+    },[props.input])
+
+    
+
+    
+    
+    
+    
     //=================================================================================================
 
 

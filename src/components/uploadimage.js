@@ -1,6 +1,6 @@
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import React from 'react';
+import React,{memo} from 'react';
 import ImgCrop from 'antd-img-crop';
 import { getavatar } from '../api/api' //从后端获得图片的方法
 //upload组件会将上传文件封装 originFileObj才是源文件
@@ -71,12 +71,14 @@ class Avatartest extends React.Component {
   })
 }
 
-shouldComponentUpdate(nextProps){  //没有这个生命周期的话 类似angongloginnavigateto 页面切换选中的员工时 子组件的子组件内数据就不会更新
+  //没有这个生命周期的话 类似angongloginnavigateto 页面切换选中的员工时 子组件的子组件内数据就不会更新
   // 比较之前的userid和传来的userid是否相同，如果相同，不重新render; 如果不相同，重新render 减少重复渲染
-    return nextProps.userid!==this.props.userid
-}
+    
 
-componentDidUpdate(nextProps) {
+
+componentWillReceiveProps(nextProps) { //在传入本组件的props改变  重新render渲染组件执行之前的操作   没改变也会重复渲染 所以要做一些减少重复渲染的操作
+  
+  if(nextProps.userid!==this.props.userid){  //当userid改变时才执行请求 不然会重复执行很多次 虽然赋值state时，如果仍未改变state值 组件并不会重渲染dom 但是请求也很消耗性能 假如去掉这个if条件()，这里会执行多次重复请求 
   getavatar(nextProps.userid).then(res=>{ //res是根据id获得的 base64数据
     console.log('upload-image,getbase64data',res)
     console.log('nextProps.userid',nextProps.userid)
@@ -84,8 +86,9 @@ componentDidUpdate(nextProps) {
       imageUrl:res.data,
       loading: false,
     })
-  })
+  })}
 }
+
 
 
 
@@ -148,4 +151,4 @@ componentDidUpdate(nextProps) {
   }
 }
 
-export default Avatartest 
+export default memo(Avatartest) 

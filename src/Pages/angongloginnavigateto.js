@@ -34,7 +34,7 @@ function Angongloginnavigateto(props){
 	}
 
 	useEffect(async()=>{
-		
+		console.log('angongloginnavigateto-res',userid)	
 		const fetchSelecttabledata=async()=>{ //重复获取相同数据组件并不会重复渲染
 			getuserdataforangongselect(sessionStorage.getItem('roleid'),sessionStorage.getItem('zone')).then(
 			//以当前登录的账号的权限和区域来读取后端数据 然后读在前端
@@ -86,7 +86,7 @@ function Angongloginnavigateto(props){
 		fetchTablehis1()
 		fetchTablehis2()
 		fetchTablehis3()
-
+		console.log('angongloginnavigateto-res',userid)
 	},[userid])	
 
 	return(

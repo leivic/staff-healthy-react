@@ -1,7 +1,7 @@
 //import { getuserdataforangongselect } from '../api/api' //这个基础数据可以直接写在组件内 因为只要是能访问这个路由的权限（安全科和安工）都是查当前区域数据 如果是安全科则查所有数据  但获取数据我们还是写在父组件里面 因为可以根据是否获取完毕数据来渲染这个组件 避免本组件data数据二次渲染
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
-import { useRef, useState } from 'react';
+import { useRef, useState, memo } from 'react';
 import Highlighter from 'react-highlight-words';
 
   //数据
@@ -187,4 +187,6 @@ const Angongselecttable = (props) => {
 
 };
 
-export default Angongselecttable;
+export default memo(Angongselecttable); //memo用来减少重复渲染 在渲染时会对props做一次浅层次的对比,防止子组件出现额外的渲染
+
+//如果props没发生变化,就不会渲染
